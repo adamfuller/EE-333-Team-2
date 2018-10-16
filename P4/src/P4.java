@@ -1,3 +1,11 @@
+/*  TODO:
+    Map room's color between max and min temp on the floor
+        - Fix max/min temperature bug with excesively high/low numbers
+    √ Fix window resizing bug where rooms disappear
+
+
+
+*/
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
@@ -17,6 +25,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -43,7 +52,7 @@ public class P4 extends EzJPanel {
     private JRadioButton lockedJRadioButton;
 
     public P4() {
-        super(500, 500, "P4");
+        super(450, 500, "P4");
         ArrayList<Room> floor1 = new ArrayList<>();
         floor1.add(new Room());
         this.floors.add(floor1);
@@ -443,6 +452,9 @@ public class P4 extends EzJPanel {
         int g = 0;
         int b = 0;
         int mid = (max+min)/2;
+        if (min == max){
+            return new Color(0,254,0);
+        }
 
         if (val > mid){
             r = (int) map(val*1.0, mid*1.0, max*1.0, 0, 254);
@@ -461,23 +473,37 @@ public class P4 extends EzJPanel {
         stopLooping();
     }
 
+
     @Override
     public void draw(Graphics g) {
         int width = super.windowWidth;
         int height = super.windowHeight;
         int numRooms = 0;
+        double maxTemp = 0.0;
+        double minTemp = 10000.0;
+
+        // iterate through each room in the current floor
         for (Room room: floors.get(floor-1)){
             numRooms++;
+            maxTemp = room.getTemp()>maxTemp?room.getTemp():maxTemp;
+            minTemp = room.getTemp()<minTemp?room.getTemp():minTemp;
         }
-        System.out.println(numRooms);
+
+        System.out.println("Max temp: " + maxTemp);
+        System.out.println("Min Temp: " + minTemp);
+
+        
+        System.out.println("Num Rooms: " +numRooms);
 
         int size;
 
         if (numRooms == 0){
             size = 0;
-        }else {
-            size = (int) ((height)/(Math.ceil(Math.sqrt(numRooms))));
+        } else {
+            size = height < width ? (int) ((height)/(Math.ceil(Math.sqrt(numRooms)))) :  (int) ((width)/(Math.ceil(Math.sqrt(numRooms))));
         }
+        System.out.println("Height: " + height);
+        System.out.println("Width: " + width);
         
         System.out.println("Size: " + size);
         
@@ -490,8 +516,9 @@ public class P4 extends EzJPanel {
                 ArrayList<Room> selectedFloor = floors.get(floor-1);
                 // System.out.println("Selected floor size: " + selectedFloor.size());
                 if (index < selectedFloor.size()){
+                    
 
-                    g.setColor(getColor( (int) floors.get(floor-1).get(index).getTemp(), 50, 90)); //TODO map this color between min and max temp
+                    g.setColor(getColor( (int) floors.get(floor-1).get(index).getTemp(), (int) minTemp, (int) maxTemp)); //TODO map this color between min and max temp
 
                     g.fillRect(i*size,j*size, size, size);
 

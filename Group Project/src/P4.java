@@ -3,6 +3,8 @@
     Map room's color between max and min temp on the floor
         - Fix max/min temperature bug with excesively high/low numbers
     Fix Floor text input to change the floor number and slider
+    Fix keyListener
+        - Delete room when delete key is pressed after selecting it
         
 */
 /* TODONE:
@@ -29,6 +31,8 @@ import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -63,19 +67,29 @@ public class P4 extends EzJPanel {
         updateHeatingCoolingLocked();
     }
     
-    public void testMethod(){
-        return;
-    }
-
     @Override
     protected void addComponents() {
 
         jf.add(this, BorderLayout.CENTER);
         jf.addMouseListener(this);
+        jf.addKeyListener(this);
 
         jf.add(getFloorSlider(), BorderLayout.EAST);
         jf.add(getControls(), BorderLayout.SOUTH);
 
+    }
+    
+    @Override
+    public void keyPressed(KeyEvent ke){
+        super.keyPressed(ke);
+        System.out.println("Key Pressed");
+        
+        if (P4.floor > 0 && P4.room > 0){
+            if (ke.getKeyCode() == KeyEvent.VK_DELETE){
+                this.floors.get(floor-1).remove(room-1);
+                repaint();
+            }
+        }
     }
 
 
@@ -103,7 +117,7 @@ public class P4 extends EzJPanel {
         int row = (int) Math.floor( (double) (me.getY()*1.0/size));
         int index = col+row*numCols; // room number clicked on;
 
-        System.out.println("Col: " + col + " Row: " + row + " Index: " + index);
+//        System.out.println("Col: " + col + " Row: " + row + " Index: " + index);
         if (index >= floors.get(floor-1).size()){
             return;
         } else {
@@ -128,7 +142,7 @@ public class P4 extends EzJPanel {
                 P4.room = 1;
                 P4.floor = floorSlider.getValue();
                 floorValue.setText(String.valueOf(P4.floor));
-                System.out.println(floorSlider.getValue());
+//                System.out.println(floorSlider.getValue());
                 updateHeatingCoolingLocked();
                 repaint();
             }
@@ -172,7 +186,7 @@ public class P4 extends EzJPanel {
                     try {
                         Integer.parseInt(floorText);
                         P4.room = Integer.parseInt(floorText);
-                        System.out.println(P4.room);
+//                        System.out.println(P4.room);
                     } catch (Exception ex) {
                         P4.room = 1;
                         floorValue.setText("1");
@@ -188,7 +202,7 @@ public class P4 extends EzJPanel {
                 try {
                     Integer.parseInt(floorText);
                     P4.room = Integer.parseInt(floorText);
-                    System.out.println(P4.room);
+//                    System.out.println(P4.room);
                 } catch (Exception ex) {
                     P4.room = 1;
                     floorValue.setText("1");
@@ -203,7 +217,7 @@ public class P4 extends EzJPanel {
                 try {
                     Integer.parseInt(floorText);
                     P4.room = Integer.parseInt(floorText);
-                    System.out.println(P4.room);
+//                    System.out.println(P4.room);
                 } catch (Exception ex) {
                     floorValue.setText("");
                 }
@@ -232,7 +246,7 @@ public class P4 extends EzJPanel {
                     try {
                         Integer.parseInt(roomText);
                         P4.room = Integer.parseInt(roomText);
-                        System.out.println(P4.room);
+//                        System.out.println(P4.room);
                     } catch (Exception ex) {
                         P4.room = 1;
                         roomValue.setText("1");
@@ -248,7 +262,7 @@ public class P4 extends EzJPanel {
                 try {
                     Integer.parseInt(roomText);
                     P4.room = Integer.parseInt(roomText);
-                    System.out.println(P4.room);
+//                    System.out.println(P4.room);
                 } catch (Exception ex) {
                     P4.room = 1;
                     roomValue.setText("1");
@@ -263,7 +277,7 @@ public class P4 extends EzJPanel {
                 try {
                     Integer.parseInt(roomText);
                     P4.room = Integer.parseInt(roomText);
-                    System.out.println(P4.room);
+//                    System.out.println(P4.room);
                 } catch (Exception ex) {
                     roomValue.setText("");
                 }
@@ -359,7 +373,7 @@ public class P4 extends EzJPanel {
         try {
             tempValue.setText(String.valueOf(floors.get(floor).get(room).getTemp()));
         } catch (Exception e) {
-            System.out.println("oops");
+//            System.out.println("oops");
         }
 
         tempValue.getDocument().addDocumentListener(new DocumentListener() {
@@ -421,7 +435,7 @@ public class P4 extends EzJPanel {
                 // add a new Floor here!
                 floors.add(new ArrayList<Room>());
                 floorSlider.setMaximum(floors.size());
-                System.out.println(floors.size());
+//                System.out.println(floors.size());
 
             }
         });
@@ -433,7 +447,7 @@ public class P4 extends EzJPanel {
     }
 
     private void updateHeatingCoolingLocked(){
-        System.out.println("Floor: " + floor + " Room: " + room);
+//        System.out.println("Floor: " + floor + " Room: " + room);
         if (room-1 >= floors.get(floor-1).size()){
             this.heatingJRadioButton.setSelected(false);
             this.coolingJRadioButton.setSelected(false);
@@ -504,11 +518,11 @@ public class P4 extends EzJPanel {
             minTemp = room.getTemp()<minTemp?room.getTemp():minTemp;
         }
 
-        System.out.println("Max temp: " + maxTemp);
-        System.out.println("Min Temp: " + minTemp);
+//        System.out.println("Max temp: " + maxTemp);
+//        System.out.println("Min Temp: " + minTemp);
 
         
-        System.out.println("Num Rooms: " +numRooms);
+//        System.out.println("Num Rooms: " +numRooms);
 
         int size;
 
@@ -517,10 +531,10 @@ public class P4 extends EzJPanel {
         } else {
             size = height < width ? (int) ((height)/(Math.ceil(Math.sqrt(numRooms)))) :  (int) ((width)/(Math.ceil(Math.sqrt(numRooms))));
         }
-        System.out.println("Height: " + height);
-        System.out.println("Width: " + width);
+//        System.out.println("Height: " + height);
+//        System.out.println("Width: " + width);
         
-        System.out.println("Size: " + size);
+//        System.out.println("Size: " + size);
         
         
 

@@ -61,6 +61,10 @@ public class P4 extends EzJPanel {
         updateTemp();
         updateHeatingCoolingLocked();
     }
+    
+    private void adamIsDumb(){
+        
+    }
 
     @Override
     protected void addComponents() {

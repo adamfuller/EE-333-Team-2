@@ -2,6 +2,7 @@
     Fix click location to work with new scaling
     Map room's color between max and min temp on the floor
         - Fix max/min temperature bug with excesively high/low numbers
+    Fix Floor text input to change the floor number and slider
         
 */
 /* TODONE:
@@ -83,11 +84,18 @@ public class P4 extends EzJPanel {
         int width = super.windowWidth;
         int height = super.windowHeight;
         int numRooms = 0;
+        
         for (Room room: floors.get(floor-1)){
             numRooms++;
         }
+        
         int size;
-        size = (numRooms==0)?0:(int) ((height)/(Math.ceil(Math.sqrt(numRooms))));
+//        size = (numRooms==0)?0:(int) ((height)/(Math.ceil(Math.sqrt(numRooms))));
+        if (numRooms == 0){
+            size = 0;
+        } else {
+            size = height < width ? (int) ((height)/(Math.ceil(Math.sqrt(numRooms)))) :  (int) ((width)/(Math.ceil(Math.sqrt(numRooms))));
+        }
         int numCols = width/size;
         // numRows = height/size;
 

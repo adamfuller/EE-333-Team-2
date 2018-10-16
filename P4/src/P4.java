@@ -1,11 +1,13 @@
 /*  TODO:
+    Fix click location to work with new scaling
     Map room's color between max and min temp on the floor
         - Fix max/min temperature bug with excesively high/low numbers
-    √ Fix window resizing bug where rooms disappear
-
-
-
+        
 */
+/* TODONE:
+    √ Add border to rooms
+    √ Fix window resizing bug where rooms disappear
+ */
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
@@ -534,7 +536,8 @@ public class P4 extends EzJPanel {
                     
                     g.setColor(Color.WHITE);
                     g.drawString(String.valueOf(Math.round(floors.get(floor-1).get(index).getTemp()*100)/100d), i*size+size/2-20, j*size+size/2);
-
+                    g.setColor(Color.black);
+                    g.drawRect(i*size,j*size, size,size);
                 }
                 
             }

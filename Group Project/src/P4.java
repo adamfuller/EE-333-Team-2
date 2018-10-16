@@ -72,6 +72,10 @@ public class P4 extends EzJPanel {
         jf.add(getControls(), BorderLayout.SOUTH);
 
     }
+    
+    public void testMethod(){
+        System.out.println("Hello");
+    }
 
     @Override
     public void mousePressed(MouseEvent me){

@@ -63,7 +63,7 @@ public class P4 extends EzJPanel {
     }
     
     public void testMethod(){
-        
+        return;
     }
 
     @Override

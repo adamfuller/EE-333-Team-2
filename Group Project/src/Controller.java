@@ -1,3 +1,7 @@
+/* TODO
+    Add Cooler
+    Add controls for cooler, turning it on and off based on temp
+*/
 /*
 * File: Controller.java
  * Author: David Green DGreen@uab.edu

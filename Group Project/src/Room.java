@@ -1,3 +1,7 @@
+/* TODO
+    Add Cooler object
+    Add effects of coolor objects state
+*/
 /*
  * File: Room.java
  * Author: David Green DGreen@uab.edu

@@ -10,3 +10,26 @@
 - [ ] Build GUI Design Layout
 
 <!-- - [ ] Make modeling Objects serializable to read and write to file -->
+
+
+### TODONE
+<!--
+* Identify Modeling Objects
+  * Extra Stuff
+* Create Modeling Objects
+  * Extra stuff
+* Identify I/O Objects
+  * Extra stuff
+* Create I/O Objects
+  * Extra stuff
+* Agree on Command Line utility functionality
+  * Extra stuff
+* Plan Command Line utility
+  * Extra stuff
+* Create Command line utility
+  * Extra stuff
+* Agree on GUI Design layout
+  * Extra stuff
+* Build GUI Design Layout
+  * Extra stuff
+-->

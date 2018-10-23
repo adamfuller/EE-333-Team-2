@@ -13,32 +13,19 @@
     √ Fix window resizing bug where rooms disappear
  */
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.Event;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.ParsePosition;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
@@ -156,14 +143,14 @@ public class P4 extends EzJPanel {
         jPanel.setLayout(new BorderLayout(1, 0));
         jPanel.setBorder(new EmptyBorder(8, 10, 8, 8));
 
-        jPanel.add(getFloorAndRoom(), BorderLayout.LINE_START);
-        jPanel.add(getHeatingCoolingLocked(), BorderLayout.CENTER);
-        jPanel.add(getTempAddRoomAndFloor(), BorderLayout.LINE_END);
+        jPanel.add(getTextInputs(), BorderLayout.LINE_START);
+        jPanel.add(getRadioButtons(), BorderLayout.CENTER);
+        jPanel.add(getButtons(), BorderLayout.LINE_END);
 
         return jPanel;
     }
 
-    private JPanel getFloorAndRoom() {
+    private JPanel getTextInputs() {
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new BorderLayout());
 
@@ -295,7 +282,7 @@ public class P4 extends EzJPanel {
         return jPanel;
     }
 
-    private JPanel getHeatingCoolingLocked() {
+    private JPanel getRadioButtons() {
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new BorderLayout());
         jPanel.setBorder(new EmptyBorder(0, 25, 0, 0));
@@ -358,7 +345,7 @@ public class P4 extends EzJPanel {
         return jPanel;
     }
 
-    private JPanel getTempAddRoomAndFloor() {
+    private JPanel getButtons() {
 
         JPanel jPanel = new JPanel();
         jPanel.setBorder(new EmptyBorder(0, 0, 0, 25));

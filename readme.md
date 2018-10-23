@@ -7,24 +7,23 @@
 - [ ] Make more milestones and tasks
 
 
-### TODO
-- [ ] Identify Modeling Objects
-- [ ] Create Modeling Objects
+### TODO (Tasks)
+- [ ] Identify Modeling Objects 
+- [ ] Create Modeling Objects 
 - [ ] Identify I/O Objects
 - [ ] Create I/O Objects
-- [ ] Agree on Command Line utility functionality
+- [ ] Agree on Command Line utility functionality - Everyone
 - [ ] Plan Command Line utility
 - [ ] Create Command line utility
-- [ ] Plan GUI Design (interactions and capabilities)
-- [ ] Begin GUI Design
-- [ ] Finalize GUI Design
+- [ ] Plan GUI Design (interactions and capabilities) - Everyone
+- [ ] Begin GUI Design - Adam - 23/10/2018
+- [ ] Finalize GUI Design - Everyone
 - [ ] Create GUI in Java
 - [ ] Plan GUI-Backend Interaction(s)
 - [ ] Verify Interaction Viability
 - [ ] Finalize Interaction Plans
 - [ ] Code Interactions
-- [ ] Test Interactions
-- [ ] Make more milestones and tasks
+- [ ] Test Interactions - Everyone
 
 <!-- - [ ] Make modeling Objects serializable to read and write to file -->
 

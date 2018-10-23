@@ -5,12 +5,13 @@
     Fix Floor text input to change the floor number and slider
     Fix keyListener
         - Delete room when delete key is pressed after selecting it
-    Rename file since it isn't P4
+    
         
 */
 /* TODONE:
     √ Add border to rooms
     √ Fix window resizing bug where rooms disappear
+    √ Rename file since it isn't P4
  */
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -47,7 +48,7 @@ public class HVAC extends EzJPanel {
     private JRadioButton lockedJRadioButton;
 
     public HVAC() {
-        super(450, 500, "P4");
+        super(450, 500, "HVAC");
         ArrayList<Room> floor1 = new ArrayList<>();
         floor1.add(new Room());
         this.floors.add(floor1);
@@ -72,7 +73,7 @@ public class HVAC extends EzJPanel {
         super.keyPressed(ke);
         System.out.println("Key Pressed");
         
-        if (P4.floor > 0 && P4.room > 0){
+        if (HVAC.floor > 0 && HVAC.room > 0){
             if (ke.getKeyCode() == KeyEvent.VK_DELETE){
                 this.floors.get(floor-1).remove(room-1);
                 repaint();
@@ -109,8 +110,8 @@ public class HVAC extends EzJPanel {
         if (index >= floors.get(floor-1).size()){
             return;
         } else {
-            P4.room = index + 1;
-            this.roomValue.setText(String.valueOf(P4.room));
+            HVAC.room = index + 1;
+            this.roomValue.setText(String.valueOf(HVAC.room));
             updateHeatingCoolingLocked();
             updateTemp();
         }
@@ -127,9 +128,9 @@ public class HVAC extends EzJPanel {
             @Override
 
             public void stateChanged(ChangeEvent e) {
-                P4.room = 1;
-                P4.floor = floorSlider.getValue();
-                floorValue.setText(String.valueOf(P4.floor));
+                HVAC.room = 1;
+                HVAC.floor = floorSlider.getValue();
+                floorValue.setText(String.valueOf(HVAC.floor));
 //                System.out.println(floorSlider.getValue());
                 updateHeatingCoolingLocked();
                 repaint();
@@ -173,10 +174,10 @@ public class HVAC extends EzJPanel {
                 } else {
                     try {
                         Integer.parseInt(floorText);
-                        P4.room = Integer.parseInt(floorText);
-//                        System.out.println(P4.room);
+                        HVAC.room = Integer.parseInt(floorText);
+//                        System.out.println(HVAC.room);
                     } catch (Exception ex) {
-                        P4.room = 1;
+                        HVAC.room = 1;
                         floorValue.setText("1");
                     }
                 }
@@ -189,10 +190,10 @@ public class HVAC extends EzJPanel {
 
                 try {
                     Integer.parseInt(floorText);
-                    P4.room = Integer.parseInt(floorText);
-//                    System.out.println(P4.room);
+                    HVAC.room = Integer.parseInt(floorText);
+//                    System.out.println(HVAC.room);
                 } catch (Exception ex) {
-                    P4.room = 1;
+                    HVAC.room = 1;
                     floorValue.setText("1");
                 }
                 updateHeatingCoolingLocked();
@@ -204,8 +205,8 @@ public class HVAC extends EzJPanel {
 
                 try {
                     Integer.parseInt(floorText);
-                    P4.room = Integer.parseInt(floorText);
-//                    System.out.println(P4.room);
+                    HVAC.room = Integer.parseInt(floorText);
+//                    System.out.println(HVAC.room);
                 } catch (Exception ex) {
                     floorValue.setText("");
                 }
@@ -233,10 +234,10 @@ public class HVAC extends EzJPanel {
                 } else {
                     try {
                         Integer.parseInt(roomText);
-                        P4.room = Integer.parseInt(roomText);
-//                        System.out.println(P4.room);
+                        HVAC.room = Integer.parseInt(roomText);
+//                        System.out.println(HVAC.room);
                     } catch (Exception ex) {
-                        P4.room = 1;
+                        HVAC.room = 1;
                         roomValue.setText("1");
                     }
                 }
@@ -249,10 +250,10 @@ public class HVAC extends EzJPanel {
 
                 try {
                     Integer.parseInt(roomText);
-                    P4.room = Integer.parseInt(roomText);
-//                    System.out.println(P4.room);
+                    HVAC.room = Integer.parseInt(roomText);
+//                    System.out.println(HVAC.room);
                 } catch (Exception ex) {
-                    P4.room = 1;
+                    HVAC.room = 1;
                     roomValue.setText("1");
                 }
                 updateHeatingCoolingLocked();
@@ -264,8 +265,8 @@ public class HVAC extends EzJPanel {
 
                 try {
                     Integer.parseInt(roomText);
-                    P4.room = Integer.parseInt(roomText);
-//                    System.out.println(P4.room);
+                    HVAC.room = Integer.parseInt(roomText);
+//                    System.out.println(HVAC.room);
                 } catch (Exception ex) {
                     roomValue.setText("");
                 }

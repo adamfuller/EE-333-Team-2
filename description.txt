@@ -1,0 +1,8 @@
+The backend code of our HVAC System is intended to simulate an HVAC system with variable disturbances to the rooms.
+It contains objects that are representative of the components in the system and build that it is contained in.
+These objects include but are not limited to: Heater, Cooler, Blower, Room, Floor, Building, Controller, Clock/Time, and Temperature Sensor.
+Each of the previously named objects is intended to simulate a corresponding component of a building or HVAC system.
+Our target product is going to be a visual simulation of the temperatures and state of each room and its HVAC components.
+The product should allow for the user to input the temperature for each room, add rooms, and add floors, deleting floors and rooms would be very beneficial.
+The simulation should capable of pausing, starting, saving its progress to a file, and resuming at a later time from a save file.
+The program should have the temperatures of the rooms be affected by an ambient temperature array that represents the temperature outside of the building.

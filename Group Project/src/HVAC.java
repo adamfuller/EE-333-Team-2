@@ -34,7 +34,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class P4 extends EzJPanel {
+public class HVAC extends EzJPanel {
     private static int floor = 1;
     private static int room = 1;
     private ArrayList<ArrayList<Room>> floors = new ArrayList<ArrayList<Room>>();
@@ -46,7 +46,7 @@ public class P4 extends EzJPanel {
     private JRadioButton coolingJRadioButton;
     private JRadioButton lockedJRadioButton;
 
-    public P4() {
+    public HVAC() {
         super(450, 500, "P4");
         ArrayList<Room> floor1 = new ArrayList<>();
         floor1.add(new Room());
@@ -560,7 +560,7 @@ public class P4 extends EzJPanel {
     }
 
     public static void main(String args[]) {
-        P4 p4 = new P4();
+        HVAC hvac = new HVAC();
     }
 
     

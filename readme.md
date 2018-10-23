@@ -8,27 +8,28 @@
 
 
 ### TODO (Tasks)
+# Startup
 - [ ] Identify Modeling Objects - Lawrence - 10/23/2018 - 6/10
 - [ ] Identify I/O Objects - Lawrence - 10/23/2018 - 6/10
 - [ ] Create Modeling Classes - Isaiah - 10/24/2018 - 5/10
 - [ ] Add functionality to Modeling classes - Isaiah - 10/25/2018 - 8/10
 - [ ] Create I/O Classes - Adam - 10/24/2018 - 5/10
 - [ ] Add functionality to I/O classes - Adam - 10/25/2018 - 8/10
-
+# Command Line
 - [ ] Agree on Command Line utility functionality - Everyone - 10/29/2018 - 5/10
 - [ ] Plan Command Line utility - Isaiah - 10/31/2018 - 7/10
 - [ ] Create Command line utility - Adam - 11/04/2018 - 10/10
-
+# GUI
 - [ ] Plan GUI Design (interactions and capabilities) - Everyone - 3/10
 - [ ] Begin GUI Design - Adam - 10/23/2018 - 3/10
 - [ ] Finalize GUI Design - Everyone - 11/06/2018 - 5/10
 - [ ] Create GUI in Java - Adam - 11/09/2018 - 6/10
 - [ ] Plan GUI-Backend Interaction(s) - Lawrence - 11/11/2018 - 4/10
-
+# GUI-Backend Interaction
 - [ ] Verify Interaction Viability - Lawrence - 11/12/2018 - 3/10
 - [ ] Finalize Interaction Plans - Everyone - 11/13/2018 - 3/10
 - [ ] Code Interactions - Isaiah - 11/17/2018 - 3/10
-
+# Testing
 - [ ] Testing - Everyone - 11/19/2018 - 10/10
 
 <!-- - [ ] Make modeling Objects serializable to read and write to file -->

@@ -1,3 +1,12 @@
+### Milestones
+- [x] Finalize GUI Design
+- [ ] Create GUI in Java
+- [ ] Finalize Interaction Plans
+- [ ] Code Interactions
+- [ ] Test Interactions
+- [ ] Make more milestones and tasks
+
+
 ### TODO
 - [ ] Identify Modeling Objects
 - [ ] Create Modeling Objects
@@ -6,8 +15,16 @@
 - [ ] Agree on Command Line utility functionality
 - [ ] Plan Command Line utility
 - [ ] Create Command line utility
-- [ ] Agree on GUI Design layout
-- [ ] Build GUI Design Layout
+- [ ] Plan GUI Design (interactions and capabilities)
+- [ ] Begin GUI Design
+- [ ] Finalize GUI Design
+- [ ] Create GUI in Java
+- [ ] Plan GUI-Backend Interaction(s)
+- [ ] Verify Interaction Viability
+- [ ] Finalize Interaction Plans
+- [ ] Code Interactions
+- [ ] Test Interactions
+- [ ] Make more milestones and tasks
 
 <!-- - [ ] Make modeling Objects serializable to read and write to file -->
 
@@ -15,7 +32,7 @@
 ### TODONE
 <!--
 * Identify Modeling Objects
-  * Extra Stuff
+  * Heater, Cooler, TempSensor
 * Create Modeling Objects
   * Extra stuff
 * Identify I/O Objects

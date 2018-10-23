@@ -1,5 +1,5 @@
 ### Milestones
-- [x] Finalize GUI Design
+- [ ] Finalize GUI Design
 - [ ] Create GUI in Java
 - [ ] Finalize Interaction Plans
 - [ ] Code Interactions

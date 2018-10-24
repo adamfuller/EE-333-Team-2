@@ -15,6 +15,7 @@
  */
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -141,12 +142,12 @@ public class HVAC extends EzJPanel {
 
     private JPanel getControls() {
         JPanel jPanel = new JPanel();
-        jPanel.setLayout(new BorderLayout(1, 0));
-        jPanel.setBorder(new EmptyBorder(8, 10, 8, 8));
+        jPanel.setLayout(new FlowLayout());
+        // jPanel.setBorder(new EmptyBorder(8, 10, 8, 8));
 
-        jPanel.add(getTextInputs(), BorderLayout.LINE_START);
-        jPanel.add(getRadioButtons(), BorderLayout.CENTER);
-        jPanel.add(getButtons(), BorderLayout.LINE_END);
+        jPanel.add(getTextInputs());
+        jPanel.add(getRadioButtons());
+        jPanel.add(getButtons());
 
         return jPanel;
     }
@@ -428,10 +429,18 @@ public class HVAC extends EzJPanel {
 
             }
         });
+        JButton startStopJButton = new JButton("Start/Stop");
+        startStopJButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                // do something
+            }
+        });
 
-        jPanel.add(tempPanel, BorderLayout.NORTH);
+        // jPanel.add(tempPanel, BorderLayout.NORTH);
         jPanel.add(addRoomJButton, BorderLayout.CENTER);
-        jPanel.add(addFloorJButton, BorderLayout.SOUTH);
+        jPanel.add(addFloorJButton, BorderLayout.NORTH);
+        jPanel.add(startStopJButton, BorderLayout.SOUTH);
         return jPanel;
     }
 

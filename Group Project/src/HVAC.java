@@ -124,19 +124,27 @@ public class HVAC extends EzJPanel {
         // this.floorSlider.setPaintLabels(true);
         // this.floorSlider.setPaintTrack(true);
         // this.floorSlider.setPaintTicks(true);
-        this.floorSlider.addChangeListener(new ChangeListener() {
-
-            @Override
-
-            public void stateChanged(ChangeEvent e) {
-                HVAC.room = 1;
+        this.floorSlider.addChangeListener((e)->{
+            HVAC.room = 1;
                 HVAC.floor = floorSlider.getValue();
                 floorValue.setText(String.valueOf(HVAC.floor));
 //                System.out.println(floorSlider.getValue());
                 updateHeatingCoolingLocked();
                 repaint();
-            }
         });
+//         this.floorSlider.addChangeListener(new ChangeListener() {
+
+//             @Override
+
+//             public void stateChanged(ChangeEvent e) {
+//                 HVAC.room = 1;
+//                 HVAC.floor = floorSlider.getValue();
+//                 floorValue.setText(String.valueOf(HVAC.floor));
+// //                System.out.println(floorSlider.getValue());
+//                 updateHeatingCoolingLocked();
+//                 repaint();
+//             }
+//         });
         return floorSlider;
     }
 
@@ -165,6 +173,7 @@ public class HVAC extends EzJPanel {
 
         this.floorValue = new JTextArea(1, 5);
         this.floorValue.setText("1");
+
         this.floorValue.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
@@ -293,15 +302,28 @@ public class HVAC extends EzJPanel {
         coolingJRadioButton = new JRadioButton("Cooling");
         lockedJRadioButton = new JRadioButton("Locked");
 
-        heatingJRadioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // if (heatingJRadioButton.isSelected()){
-                //     heatingJRadioButton.setSelected(false);
-                // } else {
-                //     heatingJRadioButton.setSelected(true);
-                // }
-                coolingJRadioButton.setSelected(false);
+        // heatingJRadioButton.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         // if (heatingJRadioButton.isSelected()){
+        //         //     heatingJRadioButton.setSelected(false);
+        //         // } else {
+        //         //     heatingJRadioButton.setSelected(true);
+        //         // }
+        //         coolingJRadioButton.setSelected(false);
+                
+        //         // floors.get(floor - 1).get(room - 1).setHeating(heatingJRadioButton.isSelected());
+        //         // floors.get(floor - 1).get(room - 1).setCooling(coolingJRadioButton.isSelected());
+
+        //         if (room <= floors.get(floor-1).size()){
+        //             floors.get(floor - 1).get(room - 1).setHeating(heatingJRadioButton.isSelected());
+        //             floors.get(floor - 1).get(room - 1).setCooling(coolingJRadioButton.isSelected());
+        //         }
+        //         repaint();
+        //     }
+        // });
+        heatingJRadioButton.addActionListener((e)->{
+            coolingJRadioButton.setSelected(false);
                 
                 // floors.get(floor - 1).get(room - 1).setHeating(heatingJRadioButton.isSelected());
                 // floors.get(floor - 1).get(room - 1).setCooling(coolingJRadioButton.isSelected());
@@ -311,34 +333,44 @@ public class HVAC extends EzJPanel {
                     floors.get(floor - 1).get(room - 1).setCooling(coolingJRadioButton.isSelected());
                 }
                 repaint();
-            }
         });
 
-        coolingJRadioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // if (coolingJRadioButton.isSelected()){
-                //     coolingJRadioButton.setSelected(false);
-                // } else {
-                //     coolingJRadioButton.setSelected(true);
-                // }
-                heatingJRadioButton.setSelected(false);
-                if (room <= floors.get(floor-1).size()){
-                    floors.get(floor - 1).get(room - 1).setHeating(heatingJRadioButton.isSelected());
-                    floors.get(floor - 1).get(room - 1).setCooling(coolingJRadioButton.isSelected());
-                }
+        coolingJRadioButton.addActionListener((e)->{
+            heatingJRadioButton.setSelected(false);
+            if (room <= floors.get(floor-1).size()){
+                floors.get(floor - 1).get(room - 1).setHeating(heatingJRadioButton.isSelected());
+                floors.get(floor - 1).get(room - 1).setCooling(coolingJRadioButton.isSelected());
+            }
+            repaint();
+        });
+        // coolingJRadioButton.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         // if (coolingJRadioButton.isSelected()){
+        //         //     coolingJRadioButton.setSelected(false);
+        //         // } else {
+        //         //     coolingJRadioButton.setSelected(true);
+        //         // }
+        //         heatingJRadioButton.setSelected(false);
+        //         if (room <= floors.get(floor-1).size()){
+        //             floors.get(floor - 1).get(room - 1).setHeating(heatingJRadioButton.isSelected());
+        //             floors.get(floor - 1).get(room - 1).setCooling(coolingJRadioButton.isSelected());
+        //         }
                 
-                repaint();
-            }
+        //         repaint();
+        //     }
+        // });
+        lockedJRadioButton.addActionListener((e)->{
+            floors.get(floor - 1).get(room - 1).setLocked(lockedJRadioButton.isSelected());
+            repaint();
         });
-
-        lockedJRadioButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                floors.get(floor - 1).get(room - 1).setLocked(lockedJRadioButton.isSelected());
-                repaint();
-            }
-        });
+        // lockedJRadioButton.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         floors.get(floor - 1).get(room - 1).setLocked(lockedJRadioButton.isSelected());
+        //         repaint();
+        //     }
+        // });
 
         jPanel.add(heatingJRadioButton, BorderLayout.NORTH);
         jPanel.add(coolingJRadioButton, BorderLayout.CENTER);
@@ -365,7 +397,7 @@ public class HVAC extends EzJPanel {
         } catch (Exception e) {
 //            System.out.println("oops");
         }
-
+        
         tempValue.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
@@ -406,36 +438,48 @@ public class HVAC extends EzJPanel {
         tempPanel.add(tempValue, BorderLayout.EAST);
 
         JButton addRoomJButton = new JButton("Add Room");
-        addRoomJButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // add a new room here!
+        addRoomJButton.addActionListener((e)->{
+             // add a new room here!
                 // after adding the room allow the user to specify the temperature otherwise
                 // use the average of the floor
                 Room room = new Room();
                 floors.get(floor-1).add(room);
                 repaint();
-            }
         });
+        // addRoomJButton.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         // add a new room here!
+        //         // after adding the room allow the user to specify the temperature otherwise
+        //         // use the average of the floor
+        //         Room room = new Room();
+        //         floors.get(floor-1).add(room);
+        //         repaint();
+        //     }
+        // });
 
         JButton addFloorJButton = new JButton("Add Floor");
-        addFloorJButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // add a new Floor here!
-                floors.add(new ArrayList<Room>());
-                floorSlider.setMaximum(floors.size());
+        addFloorJButton.addActionListener((e)->{
+            // add a new Floor here!
+            floors.add(new ArrayList<Room>());
+            floorSlider.setMaximum(floors.size());
 //                System.out.println(floors.size());
+        });
+//         addFloorJButton.addActionListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 // add a new Floor here!
+//                 floors.add(new ArrayList<Room>());
+//                 floorSlider.setMaximum(floors.size());
+// //                System.out.println(floors.size());
 
-            }
-        });
+//             }
+//         });
         JButton startStopJButton = new JButton("Start/Stop");
-        startStopJButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                // do something
-            }
+        startStopJButton.addActionListener((e)->{
+            // do something
         });
+        
 
         // jPanel.add(tempPanel, BorderLayout.NORTH);
         jPanel.add(addRoomJButton, BorderLayout.CENTER);

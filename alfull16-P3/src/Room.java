@@ -64,6 +64,7 @@ public class Room implements Clockable, Saveable{
     
     public void setDisturbance(double[] d){
         this.disturbance = d;
+        this.dIndex = 0;
     }
     
     // Commands

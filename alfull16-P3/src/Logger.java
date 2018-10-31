@@ -10,7 +10,7 @@
  *
  * @author David Green dgreen@uab.edu
  */
-public abstract class Logger {
+public abstract class Logger{
 
     // Some useful definitions
     /**

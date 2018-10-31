@@ -12,7 +12,7 @@
  *
  * @author David Green DGreen@uab.edu
  */
-public class Heater {
+public class Heater implements Saveable{
 
     private static long UIDSource = 20000;
     

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Log to a ArrayList
  * @author David Green DGreen@uab.edu
  */
-public class StringLogger extends Logger {
+public class StringLogger extends Logger implements Saveable {
     
     private ArrayList<String> logEntries;
     private int               threshold;

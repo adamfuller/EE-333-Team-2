@@ -1,6 +1,5 @@
 /* TODO
-    Add ability to save each to a specific output file
-    Add ability to load from a specific file
+    
     
 */
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author alfuller
  */
-public class HVACSim {
+public class HVACSim implements Saveable, Loadable{
     private Logger logger = new PrintLogger();
     private Heater heater = new Heater(logger);
     private TempSensor tempSensor = new TempSensor(logger);
@@ -67,6 +66,7 @@ public class HVACSim {
      * @param args 
      */
     public void parseInputs(String args[]){
+        
         for (int i = 0; i<args.length; i++){
             if (args[i].equals("-t") && i != args.length-1){
                 this.room.setTemp(Double.parseDouble(args[i+1]));
@@ -76,6 +76,37 @@ public class HVACSim {
                 this.timesToRun = Integer.parseInt(args[i+1]);
             } else if (args[i].equals("-o")){
                 this.shouldOutput = true;
+            } else if (args[i].equals("-s")){
+                this.shouldSave = true;
+                if (i+1 < args.length && !args[i+1].contains("-")){
+                    this.outputFileName = args[i+1];
+                    System.out.println("Output filename specified");
+                }
+            } else if (args[i].equals("-l")){
+                String inputFileName = null;
+                if (i+1 < args.length && !args[i+1].contains("-")){
+                    inputFileName = args[i+1];
+                }
+                try{
+                    HVACSim hvs;
+                    // if the filename is provided load from it
+                    if (inputFileName == null){
+                        hvs = (HVACSim) this.load();
+                    } else {
+                        hvs = (HVACSim) Loadable.load(inputFileName);
+                    }
+                    
+                    this.blower = hvs.blower;
+                    this.clock = hvs.clock;
+                    this.controller = hvs.controller;
+                    this.room = hvs.room;
+                } catch (Exception e){
+                    System.out.println("Failed to load from file");
+                    this.timesToRun = 0;
+                    this.shouldSave = false;
+                    break;
+                }
+                
             }
         }
     }
@@ -104,7 +135,8 @@ public class HVACSim {
             try{
                 this.clock.run();
             } catch(Exception e){
-                System.out.println("Clock failed to run");
+                System.out.println("System failed to run");
+                e.printStackTrace();
             }
         }
         
@@ -115,6 +147,18 @@ public class HVACSim {
         }
     }
     
+    public boolean hasOutputFileName(){
+        return this.outputFileName!=null;
+    }
+    
+    public String getOutputFileName(){
+        return this.outputFileName;
+    }
+    
+    public boolean shouldSave(){
+        return this.shouldSave;
+    }
+    
     public static void main(String args[]){
         System.out.println("HVACSim Name: Adam Fuller BlazerId: alfull16");
         
@@ -122,6 +166,13 @@ public class HVACSim {
         hvacSim.setup();
         hvacSim.parseInputs(args);
         hvacSim.run();
+        
+        if (hvacSim.shouldSave() && hvacSim.hasOutputFileName()){
+            hvacSim.save(hvacSim.getOutputFileName());
+        } else if (hvacSim.shouldSave()) {
+            hvacSim.save();
+        }
+        
         
     }
 }

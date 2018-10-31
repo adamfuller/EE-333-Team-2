@@ -19,7 +19,7 @@
  *
  * @author David Green DGreen@uab.edu
  */
-public class Controller implements Clockable {
+public class Controller implements Clockable, Saveable{
 
     private TempSensor tempSensor;         // input to controller
     private Heater heater;             // heat output of controller

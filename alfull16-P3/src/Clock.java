@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * 
  * @author David Green DGreen@uab.edu
  */
-public class Clock {
+public class Clock implements Saveable{
 
     private ArrayList<Clockable> clockableObjects;
     private long                 clockCount         = 0;

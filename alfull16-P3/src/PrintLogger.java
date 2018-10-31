@@ -14,7 +14,7 @@
  * 
  * @author David Green dgreen@uab.edu
  */
-public class PrintLogger extends Logger {
+public class PrintLogger extends Logger implements Saveable {
         
     /**
      * Create a PrintLogger object at DEBUG level

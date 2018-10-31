@@ -13,7 +13,7 @@
  * a temperature of <code>NaN</code>.
  * @author David Green DGreen@uab.edu
  */
-public class TempSensor {
+public class TempSensor implements Saveable {
 
     private static long UIDSource = 10000;
     

@@ -5,7 +5,7 @@
  * Vers: 1.0.0 10/09/2018 alf - initial coding
  */
 
-public class Blower {
+public class Blower implements Saveable{
     private Heater heater;
     private boolean state = false;
     private Logger logger;

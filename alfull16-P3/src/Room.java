@@ -17,7 +17,7 @@
  * 
  * @author David Green DGreen@uab.edu
  */
-public class Room implements Clockable {
+public class Room implements Clockable, Saveable{
     
     private Heater             heater;
     private TempSensor         tempSensor;

@@ -9,7 +9,7 @@
  * Implements the Logger interface but quietly ignores all commands
  * @author David Green DGreen@uab.edu
  */
-public class NullLogger extends Logger {
+public class NullLogger extends Logger implements Saveable {
 
     /**
      * Ignore request to log

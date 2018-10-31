@@ -1,0 +1,193 @@
+P2 Test program by David Green dgreen@uab.edu
+Connect Temperature Sensor TS:10000 = NaN
+Connect Heater Heater:20000 = OFF
+--- Clocking to 1 seconds.
+Preclocking Controller with TS:10000 = NaN and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 67.5 (set)
+Clocking Controller with TS:10000 = 67.5 and Heater:20000 = OFF
+Heater:20000 = OFF, turning on
+Temperature is 67.5, set heater to true
+Clocking Room
+Passes: room State 0
+Passes: room Temp 0
+--- Clocking to 2 seconds.
+Preclocking Controller with TS:10000 = 67.5 and Heater:20000 = ON
+Preclocking Room
+TS:10000 = 75.83333333333333 (set)
+Clocking Controller with TS:10000 = 75.83333333333333 and Heater:20000 = ON
+Heater:20000 = ON, turning off
+Temperature is 75.83333333333333, set heater to false
+Clocking Room
+Passes: room State 1
+Passes: room Temp 1
+--- Clocking to 3 seconds.
+Preclocking Controller with TS:10000 = 75.83333333333333 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 70.41666666666666 (set)
+Clocking Controller with TS:10000 = 70.41666666666666 and Heater:20000 = OFF
+Temperature is 70.41666666666666, set heater to false
+Clocking Room
+Passes: room State 2
+Passes: room Temp 2
+--- Clocking to 4 seconds.
+Preclocking Controller with TS:10000 = 70.41666666666666 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 67.70833333333333 (set)
+Clocking Controller with TS:10000 = 67.70833333333333 and Heater:20000 = OFF
+Heater:20000 = OFF, turning on
+Temperature is 67.70833333333333, set heater to true
+Clocking Room
+Passes: room State 3
+Passes: room Temp 3
+--- Clocking to 5 seconds.
+Preclocking Controller with TS:10000 = 67.70833333333333 and Heater:20000 = ON
+Preclocking Room
+TS:10000 = 75.90277777777777 (set)
+Clocking Controller with TS:10000 = 75.90277777777777 and Heater:20000 = ON
+Heater:20000 = ON, turning off
+Temperature is 75.90277777777777, set heater to false
+Clocking Room
+Passes: room State 4
+Passes: room Temp 4
+--- Clocking to 6 seconds.
+Preclocking Controller with TS:10000 = 75.90277777777777 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 70.45138888888889 (set)
+Clocking Controller with TS:10000 = 70.45138888888889 and Heater:20000 = OFF
+Temperature is 70.45138888888889, set heater to false
+Clocking Room
+Passes: room State 5
+Passes: room Temp 5
+--- Clocking to 7 seconds.
+Preclocking Controller with TS:10000 = 70.45138888888889 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 67.72569444444444 (set)
+Clocking Controller with TS:10000 = 67.72569444444444 and Heater:20000 = OFF
+Heater:20000 = OFF, turning on
+Temperature is 67.72569444444444, set heater to true
+Clocking Room
+Passes: room State 6
+Passes: room Temp 6
+--- Clocking to 8 seconds.
+Preclocking Controller with TS:10000 = 67.72569444444444 and Heater:20000 = ON
+Preclocking Room
+TS:10000 = 75.90856481481482 (set)
+Clocking Controller with TS:10000 = 75.90856481481482 and Heater:20000 = ON
+Heater:20000 = ON, turning off
+Temperature is 75.90856481481482, set heater to false
+Clocking Room
+Passes: room State 7
+Passes: room Temp 7
+--- Clocking to 9 seconds.
+Preclocking Controller with TS:10000 = 75.90856481481482 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 70.45428240740742 (set)
+Clocking Controller with TS:10000 = 70.45428240740742 and Heater:20000 = OFF
+Temperature is 70.45428240740742, set heater to false
+Clocking Room
+Passes: room State 8
+Passes: room Temp 8
+--- Clocking to 10 seconds.
+Preclocking Controller with TS:10000 = 70.45428240740742 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 67.72714120370371 (set)
+Clocking Controller with TS:10000 = 67.72714120370371 and Heater:20000 = OFF
+Heater:20000 = OFF, turning on
+Temperature is 67.72714120370371, set heater to true
+Clocking Room
+Passes: room State 9
+Passes: room Temp 9
+--- Clocking to 11 seconds.
+Preclocking Controller with TS:10000 = 67.72714120370371 and Heater:20000 = ON
+Preclocking Room
+TS:10000 = 75.90904706790123 (set)
+Clocking Controller with TS:10000 = 75.90904706790123 and Heater:20000 = ON
+Heater:20000 = ON, turning off
+Temperature is 75.90904706790123, set heater to false
+Clocking Room
+Passes: room State 10
+Passes: room Temp 10
+--- Clocking to 12 seconds.
+Preclocking Controller with TS:10000 = 75.90904706790123 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 70.4545235339506 (set)
+Clocking Controller with TS:10000 = 70.4545235339506 and Heater:20000 = OFF
+Temperature is 70.4545235339506, set heater to false
+Clocking Room
+Passes: room State 11
+Passes: room Temp 11
+--- Clocking to 13 seconds.
+Preclocking Controller with TS:10000 = 70.4545235339506 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 67.7272617669753 (set)
+Clocking Controller with TS:10000 = 67.7272617669753 and Heater:20000 = OFF
+Heater:20000 = OFF, turning on
+Temperature is 67.7272617669753, set heater to true
+Clocking Room
+Passes: room State 12
+Passes: room Temp 12
+--- Clocking to 14 seconds.
+Preclocking Controller with TS:10000 = 67.7272617669753 and Heater:20000 = ON
+Preclocking Room
+TS:10000 = 75.90908725565843 (set)
+Clocking Controller with TS:10000 = 75.90908725565843 and Heater:20000 = ON
+Heater:20000 = ON, turning off
+Temperature is 75.90908725565843, set heater to false
+Clocking Room
+Passes: room State 13
+Passes: room Temp 13
+--- Clocking to 15 seconds.
+Preclocking Controller with TS:10000 = 75.90908725565843 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 74.45454362782922 (set)
+Clocking Controller with TS:10000 = 74.45454362782922 and Heater:20000 = OFF
+Temperature is 74.45454362782922, set heater to false
+Clocking Room
+Passes: room State 14
+Passes: room Temp 14
+--- Clocking to 16 seconds.
+Preclocking Controller with TS:10000 = 74.45454362782922 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 73.72727181391461 (set)
+Clocking Controller with TS:10000 = 73.72727181391461 and Heater:20000 = OFF
+Temperature is 73.72727181391461, set heater to false
+Clocking Room
+Passes: room State 15
+Passes: room Temp 15
+--- Clocking to 17 seconds.
+Preclocking Controller with TS:10000 = 73.72727181391461 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 73.36363590695731 (set)
+Clocking Controller with TS:10000 = 73.36363590695731 and Heater:20000 = OFF
+Temperature is 73.36363590695731, set heater to false
+Clocking Room
+Passes: room State 16
+Passes: room Temp 16
+--- Clocking to 18 seconds.
+Preclocking Controller with TS:10000 = 73.36363590695731 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 73.18181795347866 (set)
+Clocking Controller with TS:10000 = 73.18181795347866 and Heater:20000 = OFF
+Temperature is 73.18181795347866, set heater to false
+Clocking Room
+Passes: room State 17
+Passes: room Temp 17
+--- Clocking to 19 seconds.
+Preclocking Controller with TS:10000 = 73.18181795347866 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 73.09090897673933 (set)
+Clocking Controller with TS:10000 = 73.09090897673933 and Heater:20000 = OFF
+Temperature is 73.09090897673933, set heater to false
+Clocking Room
+Passes: room State 18
+Passes: room Temp 18
+--- Clocking to 20 seconds.
+Preclocking Controller with TS:10000 = 73.09090897673933 and Heater:20000 = OFF
+Preclocking Room
+TS:10000 = 69.04545448836967 (set)
+Clocking Controller with TS:10000 = 69.04545448836967 and Heater:20000 = OFF
+Temperature is 69.04545448836967, set heater to false
+Clocking Room
+Passes: room State 19
+Passes: room Temp 19

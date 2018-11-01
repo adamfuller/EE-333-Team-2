@@ -1,0 +1,25 @@
+This command line tool simulates the HVAC System from P3. 
+It is now easier to setup and run from the command line.
+The audience for this tool would be people wanting to simulate a room's temperature with specific disturbance temps and a heater.
+Multiple instances of this tool could be used to simulate multiple rooms, even entire buildings.
+
+* Explain the following command inputs:
+
+-l {filename}  -- loads the HVAC system from a specific filename or the -s default
+-s {filename}  -- saves the HVAC system from a specific filename or the default HVACSim.svbl
+-r [int]       -- runs the HVAC system [int] number of times
+-d [double[]]  -- sets the disturbance array to the comma separated values
+-t [double]    -- sets the rooms temperature
+-o {int}       -- outputs every n%{int}==0 where n is the run number
+-h             -- prints out this section (including this)
+
+The program can receive and send data using command line arguments as well as file inputs.
+The file inputs must be specified using the commands presented earlier or using the default filenames.
+
+When using -l the location of it in the command is important.
+If it is used in the very beginning any changes will be applied to the loaded file, in the run.
+If it is used after other commands they will be overwritten.
+The -s, -o, and -r will not be overwritten as they are run independent.
+
+* Demonstrate how the order affects the outputs
+* Demonstrate changing the temp or disturbance array

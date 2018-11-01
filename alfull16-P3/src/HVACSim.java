@@ -1,5 +1,10 @@
 /* TODO
-    Add -lo to output from the printlogger
+    Don't run unless timesToRun is specified
+    Add -lo to output from the printlogger or use a printlogger instead of string logger
+    Add {int} to -o option output every i%{int}==0
+    Add -h to provide help
+    Add -- options
+    
     
 */
 import java.io.BufferedReader;

@@ -49,7 +49,7 @@ public class HVAC extends EzJPanel {
     private JRadioButton lockedJRadioButton;
 
     public HVAC() {
-        super(450, 500, "HVAC");
+        super(640, 480, "HVAC");
         ArrayList<Room> floor1 = new ArrayList<>();
         floor1.add(new Room());
         this.floors.add(floor1);

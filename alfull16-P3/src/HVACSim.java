@@ -1,5 +1,5 @@
 /* TODO
-    
+    Add -lo to output from the printlogger
     
 */
 import java.io.BufferedReader;
@@ -7,24 +7,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author alfuller
  */
 public class HVACSim implements Saveable, Loadable{
-    private Logger logger = new PrintLogger();
-    private Heater heater = new Heater(logger);
-    private TempSensor tempSensor = new TempSensor(logger);
-    private Controller controller = new Controller(logger);
-    private Clock clock = new Clock(logger);
-    private Blower blower = new Blower(logger);
-    private Room room = new Room();
+    private Logger logger;
+    private Heater heater;
+    private TempSensor tempSensor;
+    private Controller controller;
+    private Clock clock;
+    private Blower blower;
+    private Room room;
     private int timesToRun = 1;
     private boolean shouldOutput = false;
     private boolean shouldSave = false;

@@ -2,6 +2,9 @@
     
     
 */
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /*
@@ -136,6 +139,22 @@ public class HVACSim implements Saveable, Loadable{
                 this.clock.run();
             } catch(Exception e){
                 System.out.println("System failed to run");
+                if (System.getProperty("os.name").equals("Mac OS X")){
+                    try{
+                        double m = Math.random();
+                        if (m > 0.7){
+                            execute("say " + e.toString());
+                        } else if (m < 0.3){
+                            execute("say Something went wrong");
+                        } else if (m < 0.5) {
+                            execute("say Please enter proper parameters");
+                        } else {
+                            execute("say Maybe try not messing it up");
+                        }
+                    } catch (Exception e2){
+
+                    }
+                }
                 e.printStackTrace();
             }
         }
@@ -147,6 +166,22 @@ public class HVACSim implements Saveable, Loadable{
         }
     }
     
+    /**
+     * 
+     * @param command
+     * @throws IOException
+     */
+    public String execute(String command) throws IOException{
+        Process p = Runtime.getRuntime().exec(command.split(" "));
+        String s = null;
+        StringBuilder output = new StringBuilder();
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        while ((s = stdInput.readLine())!=null){
+            output.append(s);
+        }
+        return output.toString();
+    }
+
     public boolean hasOutputFileName(){
         return this.outputFileName!=null;
     }

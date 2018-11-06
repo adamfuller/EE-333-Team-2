@@ -144,9 +144,10 @@ public class Controller implements Clockable, Saveable{
 
         heater.setState(s);
 
-        if (this.heater.getState() && this.blowerDelayCount == 2) {
+        if (this.heater.getState()) {
             this.blower.setState(true);
-        } else if (this.heater.getState() && this.blowerDelayCount < 2) {
+            System.out.println("Turned blower on");
+        } else if (this.heater.getState()) {
             this.blowerDelayCount++;
         } else {
             this.blowerDelayCount = 0;

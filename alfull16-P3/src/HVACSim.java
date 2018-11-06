@@ -49,14 +49,16 @@ public class HVACSim implements Saveable, Loadable{
         this.room = new Room();
         
         this.heater.setState(false);
+
+        this.controller.connect(this.tempSensor);    // connect temperature sensor
+        this.controller.connect(this.heater);     // connect heater
+        this.controller.connect(this.blower);   // connect blower
         
         this.room.add(this.heater);
         this.room.add(this.tempSensor);
-        this.room.add(blower);
-        
-        this.controller.connect(tempSensor);    // connect temperature sensor
-        this.controller.connect(heater);     // connect heater
-        this.controller.connect(blower);
+        this.room.add(this.blower);
+
+        this.blower.add(this.heater);
         
         this.clock.add(this.controller);
         this.clock.add(room);
@@ -139,20 +141,20 @@ public class HVACSim implements Saveable, Loadable{
             } catch(Exception e){
                 System.out.println("System failed to run");
                 if (System.getProperty("os.name").equals("Mac OS X")){
-                    try{
-                        double m = Math.random();
-                        if (m > 0.7){
-                            execute("say " + e.toString());
-                        } else if (m < 0.3){
-                            execute("say Something went wrong");
-                        } else if (m < 0.5) {
-                            execute("say Please enter proper parameters");
-                        } else {
-                            execute("say Maybe try not messing it up");
-                        }
-                    } catch (Exception e2){
+                    // try{
+                    //     double m = Math.random();
+                    //     if (m > 0.7){
+                    //         execute("say " + e.toString());
+                    //     } else if (m < 0.3){
+                    //         execute("say Something went wrong");
+                    //     } else if (m < 0.5) {
+                    //         execute("say Please enter proper parameters");
+                    //     } else {
+                    //         execute("say Maybe try not messing it up");
+                    //     }
+                    // } catch (Exception e2){
 
-                    }
+                    // }
                 }
                 e.printStackTrace();
             }

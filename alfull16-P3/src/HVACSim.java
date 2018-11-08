@@ -24,7 +24,7 @@ public class HVACSim implements Saveable, Loadable{
     private Clock clock;
     private Blower blower;
     private Room room;
-    private int timesToRun = 1;
+    private int timesToRun = 0;
     private boolean shouldOutput = false;
     private boolean shouldSave = false;
     private String outputFileName = null;

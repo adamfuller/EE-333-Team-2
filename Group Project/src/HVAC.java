@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
@@ -47,6 +49,9 @@ public class HVAC extends EzJPanel {
     private JRadioButton heatingJRadioButton;
     private JRadioButton coolingJRadioButton;
     private JRadioButton lockedJRadioButton;
+    // V2 Components
+    private JComboBox floorPicker;
+    private JComboBox roomPicker;
 
     public HVAC() {
         super(640, 480, "HVAC");
@@ -64,8 +69,9 @@ public class HVAC extends EzJPanel {
         jf.addMouseListener(this);
         jf.addKeyListener(this);
 
-        jf.add(getFloorSlider(), BorderLayout.EAST);
-        jf.add(getControls(), BorderLayout.SOUTH);
+        // jf.add(getFloorSlider(), BorderLayout.EAST);
+        // jf.add(getControls(), BorderLayout.SOUTH);
+        jf.add(getRightControls(), BorderLayout.EAST);
 
     }
     
@@ -94,7 +100,7 @@ public class HVAC extends EzJPanel {
         }
         
         int size;
-//        size = (numRooms==0)?0:(int) ((height)/(Math.ceil(Math.sqrt(numRooms))));
+        // size = (numRooms==0)?0:(int) ((height)/(Math.ceil(Math.sqrt(numRooms))));
         if (numRooms == 0){
             size = 0;
         } else {
@@ -107,7 +113,7 @@ public class HVAC extends EzJPanel {
         int row = (int) Math.floor( (double) (me.getY()*1.0/size));
         int index = col+row*numCols; // room number clicked on;
 
-//        System.out.println("Col: " + col + " Row: " + row + " Index: " + index);
+        // System.out.println("Col: " + col + " Row: " + row + " Index: " + index);
         if (index >= floors.get(floor-1).size()){
             return;
         } else {
@@ -119,6 +125,89 @@ public class HVAC extends EzJPanel {
 
     }
 
+// #region Componenets V2
+
+public JPanel getRightControls(){
+    JPanel rightJPanel = new JPanel();
+    rightJPanel.setLayout(new BoxLayout(rightJPanel, BoxLayout.Y_AXIS));
+    
+
+    // Create floorPicker
+    String floorLabels[] = new String[this.floors!=null?floors.size():1];
+    for (int i = 0; i<(this.floors!=null?floors.size():1); i++){
+        floorLabels[i] = "Floor " + String.valueOf(i+1);
+    }
+    this.floorPicker = new JComboBox<String>(floorLabels);
+
+    // Create roomPicker
+    ArrayList<Room> rooms = this.floors!=null?this.floors.get(HVAC.floor-1):new ArrayList<Room>();
+    if (rooms.size() == 0){
+        rooms.add(new Room());
+    }
+    String roomLabels[] = new String[rooms.size()];
+    for (int i = 0; i<rooms.size(); i++){
+        roomLabels[i] = "Room " + String.valueOf(i+1);
+    }
+    this.roomPicker = new JComboBox<String>(roomLabels);
+
+
+
+    rightJPanel.add(this.floorPicker);
+    rightJPanel.add(this.roomPicker);
+    rightJPanel.add(getButtons2());
+    return rightJPanel;
+}
+
+private JPanel getButtons2() {
+
+    JPanel jPanel = new JPanel();
+    jPanel.setBorder(new EmptyBorder(0, 0, 0, 25));
+    jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
+    jPanel.setAlignmentX(50);
+
+    JButton addRoomJButton = new JButton("Add Room");
+    addRoomJButton.addActionListener((e)->{
+         // add a new room here!
+            // after adding the room allow the user to specify the temperature otherwise
+            // use the average of the floor
+            Room room = new Room();
+            floors.get(floor-1).add(room);
+            repaint();
+    });
+
+    JButton addFloorJButton = new JButton("Add Floor");
+    addFloorJButton.addActionListener((e)->{
+        // add a new Floor here!
+        floors.add(new ArrayList<Room>());
+        floorSlider.setMaximum(floors.size());
+//                System.out.println(floors.size());
+    });
+//         addFloorJButton.addActionListener(new ActionListener() {
+//             @Override
+//             public void actionPerformed(ActionEvent e) {
+//                 // add a new Floor here!
+//                 floors.add(new ArrayList<Room>());
+//                 floorSlider.setMaximum(floors.size());
+// //                System.out.println(floors.size());
+
+//             }
+//         });
+    JButton startStopJButton = new JButton("Start/Stop");
+    startStopJButton.addActionListener((e)->{
+        // do something
+    });
+    
+
+    // jPanel.add(tempPanel, BorderLayout.NORTH);
+    jPanel.add(addFloorJButton);
+    jPanel.add(addRoomJButton);
+    jPanel.add(startStopJButton);
+    return jPanel;
+}
+
+// #endregion Components V2
+
+// #region components V1
     private JSlider getFloorSlider() {
         this.floorSlider = new JSlider(JSlider.VERTICAL, 1, 1, 1);
         // this.floorSlider.setPaintLabels(true);
@@ -487,6 +576,7 @@ public class HVAC extends EzJPanel {
         jPanel.add(startStopJButton, BorderLayout.SOUTH);
         return jPanel;
     }
+//#endregion Componenets V1
 
     private void updateHeatingCoolingLocked(){
 //        System.out.println("Floor: " + floor + " Room: " + room);

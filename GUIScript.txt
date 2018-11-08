@@ -1,0 +1,17 @@
+This tools simulates the HVAC system of a building with multiple floors and rooms.
+
+This program is for educational purposes showing younger students how heating systems work in a simple way.
+
+The user can add floors, add rooms, change room temp, and outside temp, start and stop heating, lock a heater on or off.
+
+The GUI displays the status of each room on the current floor.
+When the room is green it is at a comfortable temp.
+When the room is red it is hot.
+When the room is blue it is cold.
+The indicator box in the upper right corner shows if the heater for the room is on or off.
+When the heater is on the box shows up as red
+When the heater is off the box is not shown
+
+They can pick rooms by either clicking on the room in the graphics window or by using the dropdown menus
+
+

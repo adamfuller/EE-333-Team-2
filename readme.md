@@ -1,3 +1,12 @@
+#Ideas
+- [ ] Maybe add heater stop temp option
+- [ ] color scale on slider
+- [ ] on off radio buttons for heater
+- [ ] timer
+- [ ] add help menu
+- [ ] add teamname
+- [ ] pre-populate the floors and rooms
+
 # Milestones
 - [ ] Finalize GUI Design
 - [ ] Create GUI in Java

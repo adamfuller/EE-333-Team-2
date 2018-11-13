@@ -1,11 +1,7 @@
-/*  TODO:
-    Fix click location to work with new scaling
-    Map room's color between max and min temp on the floor
-        - Fix max/min temperature bug with excesively high/low numbers
-    Fix Floor text input to change the floor number and slider
-    Fix keyListener
-        - Delete room when delete key is pressed after selecting it
-    
+/*  TODO:    
+    Setup GUI to use command line tool
+        - read all rooms for the current floor
+        - run a few times a second from a timer
         
 */
 /* TODONE:
@@ -579,7 +575,6 @@ private JPanel getButtons2() {
 //#endregion Componenets V1
 
     private void updateHeatingCoolingLocked(){
-//        System.out.println("Floor: " + floor + " Room: " + room);
         if (room-1 >= floors.get(floor-1).size()){
             this.heatingJRadioButton.setSelected(false);
             this.coolingJRadioButton.setSelected(false);
@@ -650,11 +645,6 @@ private JPanel getButtons2() {
             minTemp = room.getTemp()<minTemp?room.getTemp():minTemp;
         }
 
-//        System.out.println("Max temp: " + maxTemp);
-//        System.out.println("Min Temp: " + minTemp);
-
-        
-//        System.out.println("Num Rooms: " +numRooms);
 
         int size;
 
@@ -663,12 +653,6 @@ private JPanel getButtons2() {
         } else {
             size = height < width ? (int) ((height)/(Math.ceil(Math.sqrt(numRooms)))) :  (int) ((width)/(Math.ceil(Math.sqrt(numRooms))));
         }
-//        System.out.println("Height: " + height);
-//        System.out.println("Width: " + width);
-        
-//        System.out.println("Size: " + size);
-        
-        
 
         int index;
         for (int j = 0; j < (height / size); j++) {
@@ -701,6 +685,42 @@ private JPanel getButtons2() {
                 
             }
         }
+    }
+
+    /**
+     * Get the names of files for a floor number
+     * @param floor - floor to get files for
+     * @return ArrayList of filenames for the floor
+     */
+    public ArrayList<String> getFilenamesForFloor(int floor){
+        ArrayList<String> filenames = new ArrayList<>();
+        try {
+            final File folder = new File(System.getProperty("user.dir"));
+            for(File file: folder.listFiles()){
+                if (file.getName().contains(String.valueOf(floor)) && file.getName().contains("Room") && file.getName().contains("Floor")){
+                    filenames.add(file.getName());
+                }
+            }
+        } catch (Exception e){
+        }
+
+        return filenames;
+    }
+
+    /**
+     * 
+     * @param command
+     * @throws IOException
+     */
+    public String execute(String command) throws IOException{
+        Process p = Runtime.getRuntime().exec(command.split(" "));
+        String s = null;
+        StringBuilder output = new StringBuilder();
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        while ((s = stdInput.readLine())!=null){
+            output.append(s);
+        }
+        return output.toString();
     }
 
     public static void main(String args[]) {

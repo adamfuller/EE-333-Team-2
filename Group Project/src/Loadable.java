@@ -59,4 +59,21 @@ public interface Loadable{
         return null;
     }
 
+    /**
+     *  Loads an instance from the file {@code file}
+     * @param file - input file to load from
+     * @return instance of object in file
+     */
+    static public Object load(File file){
+        Object output;
+        try(final ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));){
+            output = objectInputStream.readObject();
+            objectInputStream.close();
+            return output;
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
 }

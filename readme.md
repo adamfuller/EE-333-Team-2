@@ -18,19 +18,19 @@
 
 # TODO (Tasks)
 #### Startup
-- [ ] Identify Modeling Objects - Lawrence - 10/23/2018 - 6/10
-- [ ] Identify I/O Objects - Lawrence - 10/23/2018 - 6/10
-- [ ] Create Modeling Classes - Isaiah - 10/24/2018 - 5/10
-- [ ] Add functionality to Modeling classes - Isaiah - 10/25/2018 - 8/10
-- [ ] Create I/O Classes - Adam - 10/24/2018 - 5/10
-- [ ] Add functionality to I/O classes - Adam - 10/25/2018 - 8/10
+- [x] Identify Modeling Objects - Lawrence - 10/23/2018 - 6/10
+- [x] Identify I/O Objects - Lawrence - 10/23/2018 - 6/10
+- [x] Create Modeling Classes - Isaiah - 10/24/2018 - 5/10
+- [x] Add functionality to Modeling classes - Isaiah - 10/25/2018 - 8/10
+- [x] Create I/O Classes - Adam - 10/24/2018 - 5/10
+- [x] Add functionality to I/O classes - Adam - 10/25/2018 - 8/10
 #### Command Line
-- [ ] Agree on Command Line utility functionality - Everyone - 10/29/2018 - 5/10
-- [ ] Plan Command Line utility - Isaiah - 10/31/2018 - 7/10
-- [ ] Create Command line utility - Adam - 11/04/2018 - 10/10
+- [x] Agree on Command Line utility functionality - Everyone - 10/29/2018 - 5/10
+- [x] Plan Command Line utility - Isaiah - 10/31/2018 - 7/10
+- [x] Create Command line utility - Adam - 11/04/2018 - 10/10
 #### GUI
-- [ ] Plan GUI Design (interactions and capabilities) - Everyone - 3/10
-- [ ] Begin GUI Design - Adam - 10/23/2018 - 3/10
+- [x] Plan GUI Design (interactions and capabilities) - Everyone - 3/10
+- [x] Begin GUI Design - Adam - 10/23/2018 - 3/10
 - [ ] Finalize GUI Design - Everyone - 11/06/2018 - 5/10
 - [ ] Create GUI in Java - Adam - 11/09/2018 - 6/10
 - [ ] Plan GUI-Backend Interaction(s) - Lawrence - 11/11/2018 - 4/10

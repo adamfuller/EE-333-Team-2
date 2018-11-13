@@ -1,4 +1,4 @@
-#Ideas
+# Ideas
 - [ ] Maybe add heater stop temp option
 - [ ] color scale on slider
 - [ ] on off radio buttons for heater

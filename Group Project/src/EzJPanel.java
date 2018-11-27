@@ -39,6 +39,8 @@ public abstract class EzJPanel extends JPanel
     public EzJPanel(int width, int height, String title) {
         super();
         
+        this.setup();
+        
         // assign window title
         this.title = title;
 
@@ -56,6 +58,7 @@ public abstract class EzJPanel extends JPanel
         this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.jf.add(this);
+
         // add components form subclass
         this.addComponents();
 
@@ -79,7 +82,7 @@ public abstract class EzJPanel extends JPanel
         // assign window height
         this.windowHeight = getHeight();
 
-        this.setup();
+        
 
     }
 

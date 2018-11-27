@@ -9,40 +9,16 @@
     √ Fix window resizing bug where rooms disappear
     √ Rename file since it isn't P4
  */
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JSlider;
-import javax.swing.JTextArea;
-import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
-public class HVAC extends EzJPanel {
+public class HVAC extends Application{
     private static int floor = 1;
     private static int room = 1;
     private ArrayList<ArrayList<Room>> floors;
     private Timer clock;
     private JRadioButton heatingJRadioButton;
     private JRadioButton coolingJRadioButton;
-    
+
     // V2 Components
     private JComboBox floorPicker;
     private JComboBox roomPicker;
@@ -159,7 +135,8 @@ public class HVAC extends EzJPanel {
             return;
         } else {
             HVAC.room = index + 1;
-            this.roomValue.setText(String.valueOf(HVAC.room));
+//            ///// update room dropdown here
+
             updateHeatingCoolingLocked();
             updateTemp();
         }
@@ -197,6 +174,12 @@ public JPanel getRightControls(){
     return rightJPanel;
 }
 
+public JPanel getBottomControls(){
+    JPanel bottomJPanel = new JPanel();
+
+    return bottomJPanel;
+}
+
 private JPanel getButtons2() {
 
     JPanel jPanel = new JPanel();
@@ -226,17 +209,15 @@ private JPanel getButtons2() {
         if (room-1 >= floors.get(floor-1).size()){
             this.heatingJRadioButton.setSelected(false);
             this.coolingJRadioButton.setSelected(false);
-            this.lockedJRadioButton.setSelected(false);
         } else {
             this.heatingJRadioButton.setSelected(this.floors.get(floor-1).get(room-1).isHeating());
             this.coolingJRadioButton.setSelected(this.floors.get(floor-1).get(room-1).isCooling());
-            this.lockedJRadioButton.setSelected(this.floors.get(floor-1).get(room-1).isLocked());
         }
         
     }
 
     private void updateTemp(){
-        this.tempValue.setText(String.valueOf(this.floors.get(floor-1).get(room-1).getTemp()));
+        
     }
 
     public static double map(double num, double minNum, double maxNum, double minMap, double maxMap){

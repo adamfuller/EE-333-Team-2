@@ -1,30 +1,64 @@
-/*  TODO:    
-    Setup GUI to use command line tool
-        - read all rooms for the current floor
-        - run a few times a second from a timer
-        
-*/
-/* TODONE:
-    √ Add border to rooms
-    √ Fix window resizing bug where rooms disappear
-    √ Rename file since it isn't P4
- */
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
+import java.awt.LinearGradientPaint;
+import java.awt.MultipleGradientPaint;
+import java.awt.event.ActionEvent;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSlider;
+import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
-public class HVAC extends Application{
-    private static int floor = 1;
-    private static int room = 1;
+public class HVAC extends EzJPanel {
+    private static int floor = 0;
+    private static int room = 0;
     private ArrayList<ArrayList<Room>> floors;
     private Timer clock;
-    private JRadioButton heatingJRadioButton;
-    private JRadioButton coolingJRadioButton;
+    private Clock displayClock;
+    
 
     // V2 Components
     private JComboBox floorPicker;
     private JComboBox roomPicker;
+    private JSlider roomTempSlider;
+    private JSlider outsideTempSlider;
+    private JButton startStopButton;
+    private JLabel roomTempLabel;
+    private JRadioButton heatingOnJRadioButton;
+    private JRadioButton heatingOffJRadioButton;
+    private JRadioButton coolingOnJRadioButton;
+    private JRadioButton coolingOffJRadioButton;
 
     public HVAC() {
-        super(640, 480, "HVAC");
+        super(640, 480, "HVAC Helper");
+        super.jf.setMinimumSize(new Dimension(400, 400));
+        
         updateTemp();
         updateHeatingCoolingLocked();
     }
@@ -32,6 +66,7 @@ public class HVAC extends Application{
     @Override
     public void setup() {
         this.floors = new ArrayList<ArrayList<Room>>();
+        this.displayClock = new Clock();
 
         Room myRoom = new Room(60.0 / 280.0, 20.0 / 180.0, 80.0 / 280.0, 60.0 / 180.0, 70.0);
         Room firstFloorBathRoom = new Room(140.0 / 280.0, 20.0 / 180.0, 40.0 / 280.0, 20.0 / 180.0, 70.0);
@@ -73,12 +108,13 @@ public class HVAC extends Application{
                     room.tick();
                 });
             });
+            this.displayClock.tick();
         });
 
         this.clock.start();
 
     }
-    
+
     @Override
     protected void addComponents() {
 
@@ -86,187 +122,259 @@ public class HVAC extends Application{
         jf.addMouseListener(this);
         jf.addKeyListener(this);
 
-        // jf.add(getFloorSlider(), BorderLayout.EAST);
-        // jf.add(getControls(), BorderLayout.SOUTH);
         jf.add(getRightControls(), BorderLayout.EAST);
+        jf.add(getBottomControls(), BorderLayout.SOUTH);
 
     }
-    
+
     @Override
-    public void keyPressed(KeyEvent ke){
+    public void keyPressed(KeyEvent ke) {
         super.keyPressed(ke);
-        System.out.println("Key Pressed");
-        
-        if (HVAC.floor > 0 && HVAC.room > 0){
-            if (ke.getKeyCode() == KeyEvent.VK_DELETE){
-                this.floors.get(floor-1).remove(room-1);
-                repaint();
-            }
-        }
+        // System.out.println("Key Pressed");
     }
 
-
     @Override
-    public void mousePressed(MouseEvent me){
+    public void mousePressed(MouseEvent me) {
         int width = super.windowWidth;
         int height = super.windowHeight;
-        int numRooms = 0;
-        
-        for (Room room: floors.get(floor-1)){
-            numRooms++;
+        int x = me.getX();
+        int y = me.getY();
+        for (int i = 0; i < this.floors.get(HVAC.floor).size(); i++) {
+            if (this.floors.get(HVAC.floor).get(i).isClicked(x, y)) {
+                HVAC.room = i;
+            }
         }
-        
-        int size;
-        // size = (numRooms==0)?0:(int) ((height)/(Math.ceil(Math.sqrt(numRooms))));
-        if (numRooms == 0){
-            size = 0;
+        this.roomPicker.setSelectedIndex(HVAC.room);
+        // System.out.println("Room Pressed: " + HVAC.room);
+        updateHeatingCoolingLocked();
+        updateTemp();
+    }
+
+    // #region Componenets V2
+
+    public JPanel getRightControls() {
+        JPanel rightJPanel = new JPanel();
+        // rightJPanel.setLayout(new GridLayout(12, 1));
+        rightJPanel.setLayout(new BoxLayout(rightJPanel, BoxLayout.Y_AXIS));
+        rightJPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Create floorPicker
+        String floorLabels[] = new String[this.floors != null ? floors.size() : 1];
+        for (int i = 0; i < (this.floors != null ? floors.size() : 1); i++) {
+            floorLabels[i] = "Floor " + String.valueOf(i + 1);
+        }
+        this.floorPicker = new JComboBox<String>(floorLabels);
+        this.floorPicker.setAlignmentY(Component.TOP_ALIGNMENT);
+        this.floorPicker.addActionListener((ae) -> {
+            JComboBox combo = (JComboBox) ae.getSource();
+            HVAC.floor = combo.getSelectedIndex();
+        });
+
+        // Create roomPicker
+        ArrayList<Room> rooms = this.floors != null ? this.floors.get(HVAC.floor) : new ArrayList<Room>();
+
+        String roomLabels[] = new String[rooms.size()];
+        for (int i = 0; i < rooms.size(); i++) {
+            roomLabels[i] = "Room " + String.valueOf(i + 1);
+        }
+        this.roomPicker = new JComboBox<String>(roomLabels);
+        this.roomPicker.setAlignmentY(Component.TOP_ALIGNMENT);
+        this.roomPicker.addActionListener((ae) -> {
+            JComboBox combo = (JComboBox) ae.getSource();
+            HVAC.room = combo.getSelectedIndex();
+        });
+
+        // Create start stop button
+        this.startStopButton = new JButton("Start/Stop");
+        this.startStopButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Dimension d = new Dimension(100, 50);
+        this.startStopButton.setMinimumSize(d);
+        startStopButton.addActionListener((e) -> {
+            if (this.clock.isRunning()) {
+                this.clock.stop();
+            } else {
+                this.clock.start();
+            }
+        });
+
+        // create Heating Radio button section
+        JLabel heatingLabel = new JLabel("Heating");
+        heatingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        heatingLabel.setFont(heatingLabel.getFont().deriveFont(Font.BOLD));
+
+        this.heatingOnJRadioButton = new JRadioButton("On");
+        this.heatingOnJRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.heatingOnJRadioButton.addActionListener((ae) -> {
+            this.heatingOffJRadioButton.setSelected(!heatingOnJRadioButton.isSelected());
+            this.coolingOnJRadioButton.setSelected(false);
+            this.coolingOffJRadioButton.setSelected(true);
+            this.floors.get(HVAC.floor).get(HVAC.room).setHeating(this.heatingOnJRadioButton.isSelected());
+            this.floors.get(HVAC.floor).get(HVAC.room).setCooling(false);
+        });
+
+        this.heatingOffJRadioButton = new JRadioButton("Off");
+        this.heatingOffJRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.heatingOffJRadioButton.addActionListener((ae) -> {
+            this.heatingOnJRadioButton.setSelected(!heatingOffJRadioButton.isSelected());
+            this.floors.get(HVAC.floor).get(HVAC.room).setHeating(!this.heatingOffJRadioButton.isSelected());
+        });
+
+        // create Cooling Radio button section
+        JLabel coolingLabel = new JLabel("Cooling");
+        coolingLabel.setFont(coolingLabel.getFont().deriveFont(Font.BOLD));
+        coolingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        this.coolingOnJRadioButton = new JRadioButton("On");
+        this.coolingOnJRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.coolingOnJRadioButton.addActionListener((ae) -> {
+            this.coolingOffJRadioButton.setSelected(!coolingOnJRadioButton.isSelected());
+            this.heatingOnJRadioButton.setSelected(false);
+            this.floors.get(HVAC.floor).get(HVAC.room).setCooling(this.coolingOnJRadioButton.isSelected());
+            this.floors.get(HVAC.floor).get(HVAC.room).setHeating(false);
+        });
+
+        this.coolingOffJRadioButton = new JRadioButton("Off");
+        this.coolingOffJRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.coolingOffJRadioButton.addActionListener((ae) -> {
+            this.coolingOnJRadioButton.setSelected(!coolingOffJRadioButton.isSelected());
+            this.floors.get(HVAC.floor).get(HVAC.room).setCooling(!this.coolingOffJRadioButton.isSelected());
+        });
+
+        rightJPanel.add(this.roomPicker);
+        rightJPanel.add(this.floorPicker);
+        rightJPanel.add(this.startStopButton);
+        rightJPanel.add(Box.createVerticalStrut(10));
+        rightJPanel.add(heatingLabel);
+        rightJPanel.add(this.heatingOnJRadioButton);
+        rightJPanel.add(this.heatingOffJRadioButton);
+        rightJPanel.add(Box.createVerticalStrut(10));
+        rightJPanel.add(coolingLabel);
+        rightJPanel.add(this.coolingOnJRadioButton);
+        rightJPanel.add(this.coolingOffJRadioButton);
+        return rightJPanel;
+    }
+
+    public JPanel getBottomControls() {
+        JPanel bottomJPanel = new JPanel();
+        bottomJPanel.setLayout(new BoxLayout(bottomJPanel, BoxLayout.Y_AXIS));
+        bottomJPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Create room temp area
+        this.roomTempLabel = new JLabel("Room Temperature (30-110°F)");
+        this.roomTempLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        this.roomTempSlider = new JSlider(30, 110, (int) this.floors.get(HVAC.floor).get(HVAC.room).getTemp());
+        this.roomTempSlider.setMinorTickSpacing(1);
+        this.roomTempSlider.setMajorTickSpacing(10);
+        this.roomTempSlider.setPaintTicks(true);
+        this.roomTempSlider.setPaintLabels(true);
+
+        this.roomTempSlider.addChangeListener((ce) -> {
+            JSlider slider = (JSlider) ce.getSource();
+            this.floors.get(HVAC.floor).get(HVAC.room).setTemp(slider.getValue() * 1.0);
+        });
+
+        // Create outside temp area
+        JLabel outsideTempLabel = new JLabel("Outside Temperature (30-110°F)");
+        outsideTempLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        this.outsideTempSlider = new JSlider(30, 110, (int) Room.getOutsideTemp());
+        this.outsideTempSlider.setMinorTickSpacing(1);
+        this.outsideTempSlider.setMajorTickSpacing(10);
+        this.outsideTempSlider.setPaintTicks(true);
+        this.outsideTempSlider.setPaintLabels(true);
+
+        this.outsideTempSlider.addChangeListener((ce) -> {
+            JSlider slider = (JSlider) ce.getSource();
+            Room.setOutsideTemp(slider.getValue() * 1.0);
+        });
+
+        JLabel credits = new JLabel("Developers: Adam Fuller, Isaiah Chamoun, and Lawrence Oldham");
+        credits.setAlignmentX(Component.CENTER_ALIGNMENT);
+        credits.setFont(credits.getFont().deriveFont(10.0f));
+        credits.setForeground(Color.GRAY);
+
+        // add all components
+        bottomJPanel.add(roomTempLabel);
+        bottomJPanel.add(this.roomTempSlider);
+        bottomJPanel.add(outsideTempLabel);
+        bottomJPanel.add(this.outsideTempSlider);
+        bottomJPanel.add(credits);
+        return bottomJPanel;
+    }
+
+    // #endregion Components V2
+
+    private void updateHeatingCoolingLocked() {
+        if (HVAC.room >= floors.get(floor).size()) {
+            this.heatingOffJRadioButton.setSelected(true);
+            this.heatingOnJRadioButton.setSelected(false);
+            this.coolingOnJRadioButton.setSelected(false);
+            this.coolingOffJRadioButton.setSelected(true);
         } else {
-            size = height < width ? (int) ((height)/(Math.ceil(Math.sqrt(numRooms)))) :  (int) ((width)/(Math.ceil(Math.sqrt(numRooms))));
+            this.heatingOnJRadioButton.setSelected(this.floors.get(HVAC.floor).get(HVAC.room).isHeating());
+            this.heatingOffJRadioButton.setSelected(!this.floors.get(HVAC.floor).get(HVAC.room).isHeating());
+            this.coolingOnJRadioButton.setSelected(this.floors.get(HVAC.floor).get(HVAC.room).isCooling());
+            this.coolingOffJRadioButton.setSelected(!this.floors.get(HVAC.floor).get(HVAC.room).isCooling());
         }
-        int numCols = width/size;
-        // numRows = height/size;
-
-        int col = (int) Math.floor( (double) (me.getX()*1.0/size));
-        int row = (int) Math.floor( (double) (me.getY()*1.0/size));
-        int index = col+row*numCols; // room number clicked on;
-
-        // System.out.println("Col: " + col + " Row: " + row + " Index: " + index);
-        if (index >= floors.get(floor-1).size()){
-            return;
-        } else {
-            HVAC.room = index + 1;
-//            ///// update room dropdown here
-
-            updateHeatingCoolingLocked();
-            updateTemp();
-        }
-
     }
 
-// #region Componenets V2
+    private void updateTemp() {
+        this.roomTempSlider.setValue((int) this.floors.get(HVAC.floor).get(HVAC.room).getTemp());
 
-public JPanel getRightControls(){
-    JPanel rightJPanel = new JPanel();
-    rightJPanel.setLayout(new BoxLayout(rightJPanel, BoxLayout.Y_AXIS));
-    
-
-    // Create floorPicker
-    String floorLabels[] = new String[this.floors!=null?floors.size():1];
-    for (int i = 0; i<(this.floors!=null?floors.size():1); i++){
-        floorLabels[i] = "Floor " + String.valueOf(i+1);
+        this.roomTempLabel.setText("Room Temperature (" + ((this.roomTempSlider.getValue() == 70) ? "30-110"
+                : this.roomTempSlider.getValue()) + " °F)");
     }
-    this.floorPicker = new JComboBox<String>(floorLabels);
-
-    // Create roomPicker
-    ArrayList<Room> rooms = this.floors!=null?this.floors.get(HVAC.floor-1):new ArrayList<Room>();
-
-    String roomLabels[] = new String[rooms.size()];
-    for (int i = 0; i<rooms.size(); i++){
-        roomLabels[i] = "Room " + String.valueOf(i+1);
-    }
-    this.roomPicker = new JComboBox<String>(roomLabels);
-
-
-
-    rightJPanel.add(this.floorPicker);
-    rightJPanel.add(this.roomPicker);
-    rightJPanel.add(getButtons2());
-    return rightJPanel;
-}
-
-public JPanel getBottomControls(){
-    JPanel bottomJPanel = new JPanel();
-
-    return bottomJPanel;
-}
-
-private JPanel getButtons2() {
-
-    JPanel jPanel = new JPanel();
-    jPanel.setBorder(new EmptyBorder(0, 0, 0, 25));
-    jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
-    jPanel.setAlignmentX(50);
-
-
-    JButton startStopJButton = new JButton("Start/Stop");
-    startStopJButton.addActionListener((e)->{
-        if (this.clock.isRunning()){
-            this.clock.stop();
-        } else {
-            this.clock.start();
-        }
-    }); 
-
-    // jPanel.add(tempPanel, BorderLayout.NORTH);
-    jPanel.add(startStopJButton);
-    return jPanel;
-}
-
-// #endregion Components V2
-
-
-    private void updateHeatingCoolingLocked(){
-        if (room-1 >= floors.get(floor-1).size()){
-            this.heatingJRadioButton.setSelected(false);
-            this.coolingJRadioButton.setSelected(false);
-        } else {
-            this.heatingJRadioButton.setSelected(this.floors.get(floor-1).get(room-1).isHeating());
-            this.coolingJRadioButton.setSelected(this.floors.get(floor-1).get(room-1).isCooling());
-        }
-        
-    }
-
-    private void updateTemp(){
-        
-    }
-
-    public static double map(double num, double minNum, double maxNum, double minMap, double maxMap){
-        return ((maxMap - minMap)/(maxNum - minNum))*(num - minNum) + minMap;
-    }
-
-    /**
-     * Returns color based on closeness to min and max
-     * 
-     * @param val
-     * @param min
-     * @param max
-     * @return
-     */
-    public Color getColor(int val, int min, int max){
-        int r = 0;
-        int g = 0;
-        int b = 0;
-        int mid = (max+min)/2;
-        if (min == max){
-            return new Color(0,254,0);
-        }
-
-        if (val > mid){
-            r = (int) map(val*1.0, mid*1.0, max*1.0, 0, 254);
-            g = (int) map(val*1.0, mid*1.0, max*1.0, 254, 0);
-        } else if (val < mid){
-            g = (int) map(val*1.0, min*1.0, mid*1.0, 0, 254);
-            b = (int) map(val*1.0, min*1.0, mid*1.0, 254, 0);
-        } else {
-            g = 254;
-        }
-        return new Color(Math.abs(r),Math.abs(g),Math.abs(b));
-    }
-
-    
-
 
     @Override
     public void draw(Graphics g) {
-        this.floors.get(HVAC.floor-1).forEach((r)->{
+        for (int i = 0; i < this.floors.get(HVAC.floor).size(); i++) {
+            Room r = this.floors.get(HVAC.floor).get(i);
             r.drawP(g, getWidth(), getHeight());
-        });
+            g.drawString("" + (i + 1), r.getX() + 3, r.getY() + 15);
+        }
+        this.displayClock.draw(g);
+        // this.floors.get(HVAC.floor).forEach((r)->{
+        // r.drawP(g, getWidth(), getHeight());
+        // g.drawString(""+this.floors.indexOf(r)+1, r.getX(), r.getY());
+        // });
+        updateTemp();
+        updateHeatingCoolingLocked();
     }
 
     public static void main(String args[]) {
+        // try {
+        //     // System.setProperty( "com.apple.mrj.application.apple.menu.about.name", "Ted" );
+        //     System.setProperty( "com.apple.macos.useScreenMenuBar", "true" );
+        //     System.setProperty( "apple.laf.useScreenMenuBar", "true" ); // for older versions of Java
+        //   } catch ( SecurityException e ) {
+        //     /* probably running via webstart, do nothing */
+        // }
         HVAC hvac = new HVAC();
     }
 
-    
+    private class Clock{
+        private double angle1 = -1.0* Math.PI/2.0;
+        private double angle1Increment = Math.PI/30.0;
+        private double length1 = 9.0;
+        private double radius = 10.0;
+
+        public Clock(){
+
+        }
+
+        public void tick(){
+            this.angle1+=angle1Increment;
+        }
+
+        public void draw(Graphics g){
+            g.setColor(Color.white);
+            g.drawArc(1, 1, (int) (2*radius), (int) (2*radius), 0, 360);
+            g.drawLine( (int) (1+radius), (int) (1+radius), (int) (1+radius+radius*Math.cos(angle1)), (int) (1+radius+radius*Math.sin(angle1)));
+
+            
+        }
+
+    }
 
 }

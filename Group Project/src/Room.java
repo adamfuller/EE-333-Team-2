@@ -2,18 +2,17 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Room {
-    private static double coolingTemp = 50.0;
-    private static double heatingTemp = 90.0;
-    private static double tempRate = 0.002;
     private static double outsideTemp = 70.0;
+    private static double coolingTemp = 55.0;
+    private static double heatingTemp = 85.0;
+    private static double tempRate = 0.05;
     private static double minTemp = 30.0;
     private static double maxTemp = 110.0;
 
     private int x, y, width, height;
-    private double xP, yP, widthP, heightP;
-    private double temp;
+    private double xP, yP, widthP, heightP, temp;
     private double switchingTemp = 70.0;
-    private double switchingRange = 2.0;
+    private double switchingRange = 1.0;
     private boolean isHeating = false;
     private boolean isCooling = false;
     private boolean userSet = false;
@@ -80,12 +79,16 @@ public class Room {
         this.temp = temp;
     }
 
+    /**
+     * Returns the locked state of the room
+     * @return
+     */
     public boolean isLocked(){
         return this.isLocked;
     }
 
     /**
-     * 
+     * Returns if the room is heating or not
      * @return
      */
     public boolean isHeating(){
@@ -93,7 +96,7 @@ public class Room {
     }
 
     /**
-     * 
+     * Returns if the room is cooling or not
      * @return
      */
     public boolean isCooling(){
@@ -106,6 +109,37 @@ public class Room {
      */
     public double getTemp(){
         return this.temp;
+    }
+
+    /**
+     * Returns the x position of the room
+     * @return
+     */
+    public int getX(){
+        return this.x;
+    }
+
+    /**
+     * Returns the y position of the room
+     * @return
+     */
+    public int getY(){
+        return this.y;
+    }
+
+    /**
+     * Get temperature outside of the building
+     */
+    public static double getOutsideTemp(){
+        return Room.outsideTemp;
+    }
+
+    /**
+     * Update the outside temp
+     * @param outsideTemp
+     */
+    public static void setOutsideTemp(double outsideTemp){
+        Room.outsideTemp = outsideTemp;
     }
 
     /**
@@ -129,6 +163,14 @@ public class Room {
     }
 
     /**
+     * Returns the current color of the room
+     * @return
+     */
+    public Color getColor(){
+        return this.getColor((int)this.temp, (int)Room.minTemp, (int)Room.maxTemp);
+    }
+
+    /**
      * Returns color based on closeness to min and max
      * 
      * @param val
@@ -136,7 +178,7 @@ public class Room {
      * @param max
      * @return
      */
-    public Color getColor(int val, int min, int max) {
+    private Color getColor(int val, int min, int max) {
         int r = 0;
         int g = 0;
         int b = 0;
@@ -198,27 +240,37 @@ public class Room {
      */
     public void drawP(Graphics g, int windowWidth, int windowHeight){
         g.setColor(this.getColor((int) this.temp, (int) Room.minTemp, (int) Room.maxTemp));
-        int x = (int) (this.xP * windowWidth);
-        int y = (int) (this.yP * windowHeight);
-        int width = (int) (this.widthP * windowWidth);
-        int height = (int) (this.heightP * windowHeight);
-        // System.out.println("XY" + x + " " + y);
-        // System.out.println("WH " + width + " " + height);
+        this.x = (int) (this.xP * windowWidth);
+        this.y = (int) (this.yP * windowHeight);
+        this.width = (int) (this.widthP * windowWidth);
+        this.height = (int) (this.heightP * windowHeight);
 
-        g.fillRect(x, y, width, height);
+        g.fillRect(this.x, this.y, this.width, this.height);
         if (this.isCooling){
             g.setColor(Color.BLUE);
-            g.fillRect(x+width-5, y, 5,5);
+            g.fillRect(this.x+this.width-10, this.y, 10,10);
         } else if (this.isHeating){
             g.setColor(Color.RED);
-            g.fillRect(x+width-5, y, 5,5);
+            g.fillRect(this.x+this.width-10, this.y, 10,10);
         }
 
         g.setColor(Color.black);
-        g.drawRect(x, y, width, height);
-
+        g.drawRect(this.x, this.y, this.width, this.height);
     }
 
-
+    /**
+     * Returns if a click happens on this room
+     * @param clickX
+     * @param clickY
+     * @return
+     */
+    public boolean isClicked(int clickX, int clickY){
+        if (clickX > this.x && clickX < this.x+this.width){
+            if (clickY > this.y && clickY < this.y+this.height){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

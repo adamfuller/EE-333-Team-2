@@ -1,3 +1,10 @@
+/*
+ * File: Room.java
+ * Authors: Adam Fuller, Isaiah Chamoun, Lawrence Oldham
+ * Assignment:  Group Project - EE333 Fall 2018
+ * Vers: 1.0.1 11/28/2018 alf - updated for percentage based drawing
+ * Vers: 1.0.0 11/13/2018 alf - initial coding
+ */
 import java.awt.Color;
 import java.awt.Graphics;
 

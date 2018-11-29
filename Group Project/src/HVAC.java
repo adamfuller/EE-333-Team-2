@@ -1,3 +1,10 @@
+/*
+ * File: HVAC.java
+ * Authors: Adam Fuller, Isaiah Chamoun, Lawrence Oldham
+ * Assignment:  Group Project - EE333 Fall 2018
+ * Vers: 2.0.0 11/28/2018 alf - switched to revised design and functionality
+ * Vers: 1.0.0 10/23/2018 alf - initial coding
+ */
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

@@ -1,3 +1,13 @@
+/*
+ * File: EzJPanel.java
+ * Author: Adam Fuller alfull16@uab.edu
+ * Vers: 2.0.1 10/22/2018 alf - added setup and addComponents methods
+ * Vers: 2.0.0 3/28/2018 alf - switched to abstract class
+ * Vers: 1.1.2 3/7/2018 alf - added looping controls
+ * Vers: 1.1.1 2/9/2018 alf - added keymap
+ * Vers: 1.1.0 2/8/2018 alf - added Listeners
+ * Vers: 1.0.0 2/4/2018 alf - initial coding
+ */
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -59,7 +69,7 @@ public abstract class EzJPanel extends JPanel
 
         this.jf.add(this);
 
-        // add components form subclass
+        // add components from subclass
         this.addComponents();
 
         // make JPanel visible

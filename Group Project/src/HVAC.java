@@ -1,3 +1,4 @@
+
 /*
  * File: HVAC.java
  * Authors: Adam Fuller, Isaiah Chamoun, Lawrence Oldham
@@ -44,7 +45,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-
 public class HVAC extends EzJPanel {
     private static int floor = 0;
     private static int room = 0;
@@ -55,25 +55,19 @@ public class HVAC extends EzJPanel {
     static public int yPos = 200;
     static public int xVel = 20;
     static public int yVel = 20;
-    
 
     // V2 Components
-    private JComboBox floorPicker;
-    private JComboBox roomPicker;
-    private JSlider roomTempSlider;
-    private JSlider outsideTempSlider;
+    private JComboBox roomPicker, floorPicker;
+    private JSlider roomTempSlider, outsideTempSlider;
     private JButton startStopButton;
-    private JLabel roomTempLabel;
-    private JLabel outsideTempLabel;
-    private JRadioButton heatingOnJRadioButton;
-    private JRadioButton heatingOffJRadioButton;
-    private JRadioButton coolingOnJRadioButton;
-    private JRadioButton coolingOffJRadioButton;
+    private JLabel roomTempLabel, outsideTempLabel;
+    private JRadioButton heatingOnJRadioButton, heatingOffJRadioButton;
+    private JRadioButton coolingOnJRadioButton, coolingOffJRadioButton;
 
     public HVAC() {
         super(640, 480, "HVAC Helper");
         super.jf.setMinimumSize(new Dimension(480, 400));
-        
+
         updateTemp();
         updateHeatingCoolingLocked();
     }
@@ -142,53 +136,51 @@ public class HVAC extends EzJPanel {
 
         JMenuBar menuBar = new JMenuBar();
         JMenu help = new JMenu("Help Me");
-        help.addMenuListener(
-            new MenuListener(){
-                @Override
-                public void menuSelected(MenuEvent e) {
-                    System.out.println("Help clicked");
+        help.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+                System.out.println("Help clicked");
 
-                    JDialog dialog = new JDialog();
-                    dialog.setSize(200,200);
-                    dialog.setLocation(500,500);
-                    dialog.setLayout(new GridLayout(1,1));
-                    JLabel helpLabel = new JLabel("It's just a heater stupid");
-                    helpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    dialog.add(helpLabel);
-                    dialog.setVisible(true);
-                    dialog.setResizable(false);
-                    
-                    new Timer(30, (NULL)->{
-                        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-                        
-                        xPos+=xVel;
-                        yPos+=yVel;
-                        if (xPos>=screenSize.getWidth()-200){
-                            xVel*=-1;
-                        } else if (xPos<=0){
-                            xVel*=-1;
-                        }
-                        if (yPos>=screenSize.getHeight()-200){
-                            yVel*=-1;
-                        } else if (yPos<=0){
-                            yVel*=-1;
-                        }
-                        dialog.setLocation(xPos, yPos);
-                    }).start();
-                }
-            
-                @Override
-                public void menuDeselected(MenuEvent e) {
-                    
-                }
-            
-                @Override
-                public void menuCanceled(MenuEvent e) {
-                    
-                }
+                JDialog dialog = new JDialog();
+                dialog.setSize(200, 200);
+                dialog.setLocation(500, 500);
+                dialog.setLayout(new GridLayout(1, 1));
+                JLabel helpLabel = new JLabel("It's just a heater stupid");
+                helpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                dialog.add(helpLabel);
+                dialog.setVisible(true);
+                dialog.setResizable(false);
+
+                new Timer(30, (NULL) -> {
+                    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+                    xPos += xVel;
+                    yPos += yVel;
+                    if (xPos >= screenSize.getWidth() - 200) {
+                        xVel *= -1;
+                    } else if (xPos <= 0) {
+                        xVel *= -1;
+                    }
+                    if (yPos >= screenSize.getHeight() - 200) {
+                        yVel *= -1;
+                    } else if (yPos <= 0) {
+                        yVel *= -1;
+                    }
+                    dialog.setLocation(xPos, yPos);
+                }).start();
             }
-        );
-        help.addActionListener((ae)->{
+
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
+            }
+        });
+        help.addActionListener((ae) -> {
             System.out.println("Help clicked");
         });
 
@@ -359,10 +351,11 @@ public class HVAC extends EzJPanel {
         this.outsideTempSlider.addChangeListener((ce) -> {
             JSlider slider = (JSlider) ce.getSource();
             Room.setOutsideTemp(slider.getValue() * 1.0);
-            this.outsideTempLabel.setText("Outside Temperature ("+slider.getValue()+"°F)");
+            this.outsideTempLabel.setText("Outside Temperature (" + slider.getValue() + "°F)");
         });
 
-        JLabel credits = new JLabel("HVAC Helper (Trial Version)    Developers: Adam Fuller, Isaiah Chamoun, and Lawrence Oldham");
+        JLabel credits = new JLabel(
+                "HVAC Helper (Trial Version)    Developers: Adam Fuller, Isaiah Chamoun, and Lawrence Oldham");
         credits.setAlignmentX(Component.CENTER_ALIGNMENT);
         credits.setFont(credits.getFont().deriveFont(10.0f));
         credits.setForeground(Color.GRAY);
@@ -395,8 +388,8 @@ public class HVAC extends EzJPanel {
     private void updateTemp() {
         this.roomTempSlider.setValue((int) this.floors.get(HVAC.floor).get(HVAC.room).getTemp());
 
-        this.roomTempLabel.setText("Room Temperature (" + this.roomTempSlider.getValue()+ "°F)");
-        
+        this.roomTempLabel.setText("Room Temperature (" + this.roomTempSlider.getValue() + "°F)");
+
     }
 
     @Override
@@ -417,35 +410,36 @@ public class HVAC extends EzJPanel {
 
     public static void main(String args[]) {
         try {
-            // System.setProperty( "com.apple.mrj.application.apple.menu.about.name", "Ted" );
-            System.setProperty( "com.apple.macos.useScreenMenuBar", "true" );
-            System.setProperty( "apple.laf.useScreenMenuBar", "true" ); // for older versions of Java
-          } catch ( SecurityException e ) {
+            // System.setProperty( "com.apple.mrj.application.apple.menu.about.name", "Ted"
+            // );
+            System.setProperty("com.apple.macos.useScreenMenuBar", "true");
+            System.setProperty("apple.laf.useScreenMenuBar", "true"); // for older versions of Java
+        } catch (SecurityException e) {
             /* probably running via webstart, do nothing */
         }
         HVAC hvac = new HVAC();
     }
 
-    private class Clock{
-        private double angle1 = -1.0* Math.PI/2.0;
-        private double angle1Increment = Math.PI/30.0;
+    private class Clock {
+        private double angle1 = -1.0 * Math.PI / 2.0;
+        private double angle1Increment = Math.PI / 30.0;
         private double length1 = 9.0;
         private double radius = 20.0;
 
-        public Clock(){
+        public Clock() {
 
         }
 
-        public void tick(){
-            this.angle1+=angle1Increment;
+        public void tick() {
+            this.angle1 += angle1Increment;
         }
 
-        public void draw(Graphics g){
+        public void draw(Graphics g) {
             g.setColor(Color.white);
-            g.drawArc(1, 1, (int) (2*radius), (int) (2*radius), 0, 360);
-            g.drawLine( (int) (1+radius), (int) (1+radius), (int) (1+radius+radius*Math.cos(angle1)), (int) (1+radius+radius*Math.sin(angle1)));
+            g.drawArc(1, 1, (int) (2 * radius), (int) (2 * radius), 0, 360);
+            g.drawLine((int) (1 + radius), (int) (1 + radius), (int) (1 + radius + radius * Math.cos(angle1)),
+                    (int) (1 + radius + radius * Math.sin(angle1)));
 
-            
         }
 
     }

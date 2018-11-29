@@ -1,3 +1,4 @@
+
 /*
  * File: Room.java
  * Authors: Adam Fuller, Isaiah Chamoun, Lawrence Oldham
@@ -12,7 +13,7 @@ public class Room {
     private static double outsideTemp = 70.0;
     private static double coolingTemp = 55.0;
     private static double heatingTemp = 85.0;
-    private static double tempRate = 0.05;
+    private static double tempRate = 0.08;
     private static double minTemp = 30.0;
     private static double maxTemp = 110.0;
 
@@ -36,7 +37,7 @@ public class Room {
     /**
      * Create new room where location and size is a fraction/decimal from 0.0-1.0
      */
-    public Room(double xP, double yP, double widthP, double heightP, double temp){
+    public Room(double xP, double yP, double widthP, double heightP, double temp) {
         this.xP = xP;
         this.yP = yP;
         this.widthP = widthP;
@@ -55,11 +56,11 @@ public class Room {
             } else if (this.temp < this.switchingTemp - switchingRange) {
                 this.isHeating = true;
                 this.isCooling = false;
-            } 
-            // else {
-            //     this.isCooling = false;
-            //     this.isHeating = false;
-            // }
+            }
+            else {
+                this.isCooling = false;
+                this.isHeating = false;
+            }
         }
         if (this.isCooling) {
             this.temp = ((this.temp + Room.coolingTemp * Room.tempRate + Room.outsideTemp * Room.tempRate)
@@ -88,64 +89,71 @@ public class Room {
 
     /**
      * Returns the locked state of the room
+     * 
      * @return
      */
-    public boolean isLocked(){
+    public boolean isLocked() {
         return this.isLocked;
     }
 
     /**
      * Returns if the room is heating or not
+     * 
      * @return
      */
-    public boolean isHeating(){
+    public boolean isHeating() {
         return this.isHeating;
     }
 
     /**
      * Returns if the room is cooling or not
+     * 
      * @return
      */
-    public boolean isCooling(){
+    public boolean isCooling() {
         return this.isCooling;
     }
 
     /**
      * Gets the temperature of the room
+     * 
      * @return the current temperature of this room
      */
-    public double getTemp(){
+    public double getTemp() {
         return this.temp;
     }
 
     /**
      * Returns the x position of the room
+     * 
      * @return
      */
-    public int getX(){
+    public int getX() {
         return this.x;
     }
 
     /**
      * Returns the y position of the room
+     * 
      * @return
      */
-    public int getY(){
+    public int getY() {
         return this.y;
     }
 
     /**
      * Get temperature outside of the building
      */
-    public static double getOutsideTemp(){
+    public static double getOutsideTemp() {
         return Room.outsideTemp;
     }
 
     /**
      * Update the outside temp
+     * 
      * @param outsideTemp
      */
-    public static void setOutsideTemp(double outsideTemp){
+    public static void setOutsideTemp(double outsideTemp) {
         Room.outsideTemp = outsideTemp;
     }
 
@@ -171,10 +179,11 @@ public class Room {
 
     /**
      * Returns the current color of the room
+     * 
      * @return
      */
-    public Color getColor(){
-        return this.getColor((int)this.temp, (int)Room.minTemp, (int)Room.maxTemp);
+    public Color getColor() {
+        return this.getColor((int) this.temp, (int) Room.minTemp, (int) Room.maxTemp);
     }
 
     /**
@@ -227,12 +236,12 @@ public class Room {
     public void draw(Graphics g) {
         g.setColor(this.getColor((int) this.temp, (int) Room.minTemp, (int) Room.maxTemp));
         g.fillRect(this.x, this.y, this.width, this.height);
-        if (this.isCooling){
+        if (this.isCooling) {
             g.setColor(Color.BLUE);
-            g.fillRect(this.x+this.width-5, this.y, 5,5);
-        } else if (this.isHeating){
+            g.fillRect(this.x + this.width - 5, this.y, 5, 5);
+        } else if (this.isHeating) {
             g.setColor(Color.RED);
-            g.fillRect(this.x+this.width-5, this.y, 5,5);
+            g.fillRect(this.x + this.width - 5, this.y, 5, 5);
         }
 
         g.setColor(Color.black);
@@ -241,11 +250,12 @@ public class Room {
 
     /**
      * Draws based on input percentages
+     * 
      * @param g
      * @param windowWidth
      * @param windowHeight
      */
-    public void drawP(Graphics g, int windowWidth, int windowHeight){
+    public void drawP(Graphics g, int windowWidth, int windowHeight) {
         g.setColor(this.getColor((int) this.temp, (int) Room.minTemp, (int) Room.maxTemp));
         this.x = (int) (this.xP * windowWidth);
         this.y = (int) (this.yP * windowHeight);
@@ -253,12 +263,12 @@ public class Room {
         this.height = (int) (this.heightP * windowHeight);
 
         g.fillRect(this.x, this.y, this.width, this.height);
-        if (this.isCooling){
+        if (this.isCooling) {
             g.setColor(Color.BLUE);
-            g.fillRect(this.x+this.width-10, this.y, 10,10);
-        } else if (this.isHeating){
+            g.fillRect(this.x + this.width - 10, this.y, 10, 10);
+        } else if (this.isHeating) {
             g.setColor(Color.RED);
-            g.fillRect(this.x+this.width-10, this.y, 10,10);
+            g.fillRect(this.x + this.width - 10, this.y, 10, 10);
         }
 
         g.setColor(Color.black);
@@ -267,13 +277,14 @@ public class Room {
 
     /**
      * Returns if a click happens on this room
+     * 
      * @param clickX
      * @param clickY
      * @return
      */
-    public boolean isClicked(int clickX, int clickY){
-        if (clickX > this.x && clickX < this.x+this.width){
-            if (clickY > this.y && clickY < this.y+this.height){
+    public boolean isClicked(int clickX, int clickY) {
+        if (clickX > this.x && clickX < this.x + this.width) {
+            if (clickY > this.y && clickY < this.y + this.height) {
                 return true;
             }
         }

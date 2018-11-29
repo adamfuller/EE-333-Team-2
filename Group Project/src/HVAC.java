@@ -57,6 +57,7 @@ public class HVAC extends EzJPanel {
     private JSlider outsideTempSlider;
     private JButton startStopButton;
     private JLabel roomTempLabel;
+    private JLabel outsideTempLabel;
     private JRadioButton heatingOnJRadioButton;
     private JRadioButton heatingOffJRadioButton;
     private JRadioButton coolingOnJRadioButton;
@@ -175,6 +176,8 @@ public class HVAC extends EzJPanel {
         this.floorPicker.addActionListener((ae) -> {
             JComboBox combo = (JComboBox) ae.getSource();
             HVAC.floor = combo.getSelectedIndex();
+            HVAC.room = 0;
+            this.roomPicker.setSelectedIndex(0);
         });
 
         // Create roomPicker
@@ -282,8 +285,8 @@ public class HVAC extends EzJPanel {
         });
 
         // Create outside temp area
-        JLabel outsideTempLabel = new JLabel("Outside Temperature (30-110°F)");
-        outsideTempLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.outsideTempLabel = new JLabel("Outside Temperature (30-110°F)");
+        this.outsideTempLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.outsideTempSlider = new JSlider(30, 110, (int) Room.getOutsideTemp());
         this.outsideTempSlider.setMinorTickSpacing(1);
@@ -294,6 +297,7 @@ public class HVAC extends EzJPanel {
         this.outsideTempSlider.addChangeListener((ce) -> {
             JSlider slider = (JSlider) ce.getSource();
             Room.setOutsideTemp(slider.getValue() * 1.0);
+            this.outsideTempLabel.setText("Outside Temperature ("+slider.getValue()+"°F)");
         });
 
         JLabel credits = new JLabel("Developers: Adam Fuller, Isaiah Chamoun, and Lawrence Oldham");
@@ -329,8 +333,8 @@ public class HVAC extends EzJPanel {
     private void updateTemp() {
         this.roomTempSlider.setValue((int) this.floors.get(HVAC.floor).get(HVAC.room).getTemp());
 
-        this.roomTempLabel.setText("Room Temperature (" + ((this.roomTempSlider.getValue() == 70) ? "30-110"
-                : this.roomTempSlider.getValue()) + " °F)");
+        this.roomTempLabel.setText("Room Temperature (" + this.roomTempSlider.getValue()+ "°F)");
+        
     }
 
     @Override
@@ -364,7 +368,7 @@ public class HVAC extends EzJPanel {
         private double angle1 = -1.0* Math.PI/2.0;
         private double angle1Increment = Math.PI/30.0;
         private double length1 = 9.0;
-        private double radius = 10.0;
+        private double radius = 20.0;
 
         public Clock(){
 

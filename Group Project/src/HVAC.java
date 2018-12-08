@@ -56,7 +56,7 @@ public class HVAC extends EzJPanel {
         super.jf.setMinimumSize(new Dimension(480, 400));
 
         updateTemp();
-        updateHeatingCoolingLocked();
+        updateHeatingCooling();
         stopLooping();
     }
 
@@ -115,10 +115,8 @@ public class HVAC extends EzJPanel {
 
     @Override
     protected void addComponents() {
-
         jf.add(this, BorderLayout.CENTER);
-        jf.addMouseListener(this);
-        jf.addKeyListener(this);
+        // super.addKeyListener(this);
 
         jf.add(getRightControls(), BorderLayout.EAST);
         jf.add(getBottomControls(), BorderLayout.SOUTH);
@@ -170,24 +168,23 @@ public class HVAC extends EzJPanel {
             }
         });
         help.addActionListener((ae) -> {
-            System.out.println("Help clicked");
+            // System.out.println("Help clicked");
         });
 
         menuBar.add(help);
         jf.setJMenuBar(menuBar);
 
+
     }
 
-    @Override
-    public void keyPressed(KeyEvent ke) {
-        super.keyPressed(ke);
-        // System.out.println("Key Pressed");
-    }
+    // @Override
+    // public void keyPressed(KeyEvent ke) {
+    //     super.keyPressed(ke);
+    //     System.out.println("Key Pressed");
+    // }
 
     @Override
     public void mousePressed(MouseEvent me) {
-        int width = super.windowWidth;
-        int height = super.windowHeight;
         int x = me.getX();
         int y = me.getY();
         for (int i = 0; i < this.floors.get(HVAC.floor).size(); i++) {
@@ -197,13 +194,17 @@ public class HVAC extends EzJPanel {
         }
         this.roomPicker.setSelectedIndex(HVAC.room);
         // System.out.println("Room Pressed: " + HVAC.room);
-        updateHeatingCoolingLocked();
+        updateHeatingCooling();
         updateTemp();
         this.repaint();
     }
 
     // #region Componenets V2
 
+    /**
+     * Get the controls to the right of the graphics window
+     * @return {@code JPanel} containing the controls on the right
+     */
     public JPanel getRightControls() {
         JPanel rightJPanel = new JPanel();
         // rightJPanel.setLayout(new GridLayout(12, 1));
@@ -316,6 +317,10 @@ public class HVAC extends EzJPanel {
         return rightJPanel;
     }
 
+    /**
+     * Get the controls below the graphics window
+     * @return {@code JPanel} containing the controls on the bottom
+     */
     public JPanel getBottomControls() {
         JPanel bottomJPanel = new JPanel();
         bottomJPanel.setLayout(new BoxLayout(bottomJPanel, BoxLayout.Y_AXIS));
@@ -333,7 +338,7 @@ public class HVAC extends EzJPanel {
 
         this.roomTempSlider.addChangeListener((ce) -> {
             JSlider slider = (JSlider) ce.getSource();
-            this.floors.get(HVAC.floor).get(HVAC.room).setTemp(slider.getValue() * 1.0, "roomTempSlider");
+            this.floors.get(HVAC.floor).get(HVAC.room).setTemp(slider.getValue() * 1.0);
             repaint();
         });
 
@@ -370,7 +375,10 @@ public class HVAC extends EzJPanel {
 
     // #endregion Components V2
 
-    private void updateHeatingCoolingLocked() {
+    /**
+     * Update the heating and cooling radio buttons
+     */
+    private void updateHeatingCooling() {
         if (HVAC.room >= floors.get(floor).size()) {
             this.heatingOffJRadioButton.setSelected(true);
             this.heatingOnJRadioButton.setSelected(false);
@@ -391,6 +399,9 @@ public class HVAC extends EzJPanel {
         }
     }
 
+    /**
+     * Update the room temp sliders
+     */
     private void updateTemp() {
         if (this.roomTempSlider.getValue() != ((int) this.floors.get(HVAC.floor).get(HVAC.room).getTemp())){
             this.roomTempSlider.setValue((int) this.floors.get(HVAC.floor).get(HVAC.room).getTemp() );
@@ -413,25 +424,26 @@ public class HVAC extends EzJPanel {
         // g.drawString(""+this.floors.indexOf(r)+1, r.getX(), r.getY());
         // });
         updateTemp();
-        updateHeatingCoolingLocked();
+        updateHeatingCooling();
     }
 
     public static void main(String args[]) {
-        try {
-            // System.setProperty( "com.apple.mrj.application.apple.menu.about.name", "Ted"
-            // );
+        try { // use the native menu bar on a mac
             System.setProperty("com.apple.macos.useScreenMenuBar", "true");
-            System.setProperty("apple.laf.useScreenMenuBar", "true"); // for older versions of Java
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
         } catch (SecurityException e) {
             /* probably running via webstart, do nothing */
         }
         HVAC hvac = new HVAC();
     }
 
+
+    /**
+     * Class for the display clock on the screen
+     */
     private class Clock {
         private double angle1 = -1.0 * Math.PI / 2.0;
         private double angle1Increment = Math.PI / 30.0;
-        private double length1 = 9.0;
         private double radius = 20.0;
 
         public Clock() {

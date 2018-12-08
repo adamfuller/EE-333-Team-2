@@ -63,12 +63,12 @@ public class Room {
         }
         if (this.isCooling) {
             this.setTemp((this.temp + Room.coolingTemp * Room.tempRate + Room.outsideTemp * Room.tempRate)
-                    / ((1 + 2 * Room.tempRate)), "tick");
+                    / ((1 + 2 * Room.tempRate)));
         } else if (this.isHeating) {
             this.setTemp((this.temp + Room.heatingTemp * Room.tempRate + Room.outsideTemp * Room.tempRate)
-                    / (1 + 2 * Room.tempRate), "tick");
+                    / (1 + 2 * Room.tempRate));
         } else {
-            this.setTemp((this.temp + Room.outsideTemp * Room.tempRate) / (1 + Room.tempRate), "tick");
+            this.setTemp((this.temp + Room.outsideTemp * Room.tempRate) / (1 + Room.tempRate));
         }
     }
 
@@ -86,19 +86,6 @@ public class Room {
         this.temp = temp;
     }
     
-    /**
-     * Update the rooms temp
-     * 
-     * @param temp
-     */
-    public void setTemp(double temp, String location) {
-        if (temp > Room.maxTemp) {
-            temp = Room.maxTemp;
-        } else if (temp < Room.minTemp) {
-            temp = Room.minTemp;
-        }
-        this.temp = temp;
-    }
 
     /**
      * Returns the locked state of the room
@@ -205,7 +192,7 @@ public class Room {
      * @param val
      * @param min
      * @param max
-     * @return
+     * @return {@code Color} of the room
      */
     private Color getColor(int val, int min, int max) {
         int r = 0;
@@ -234,7 +221,7 @@ public class Room {
      * @param maxNum
      * @param minMap
      * @param maxMap
-     * @return
+     * @return {@code double} value interpolated between minMap and maxMap
      */
     public static double map(double num, double minNum, double maxNum, double minMap, double maxMap) {
         /*
@@ -246,6 +233,10 @@ public class Room {
         return (allInOne);
     }
 
+    /**
+     * Draw this room
+     * @param g graphics object to be drawn on
+     */
     public void draw(Graphics g) {
         g.setColor(this.getColor((int) this.temp, (int) Room.minTemp, (int) Room.maxTemp));
         g.fillRect(this.x, this.y, this.width, this.height);
@@ -293,7 +284,7 @@ public class Room {
      * 
      * @param clickX
      * @param clickY
-     * @return
+     * @return {@code true} if the click is within bounds of this room
      */
     public boolean isClicked(int clickX, int clickY) {
         if (clickX > this.x && clickX < this.x + this.width) {

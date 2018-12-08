@@ -1,4 +1,3 @@
-
 /*
  * File: HVAC.java
  * Authors: Adam Fuller, Isaiah Chamoun, Lawrence Oldham
@@ -10,20 +9,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
-import java.awt.LinearGradientPaint;
-import java.awt.MultipleGradientPaint;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -34,14 +25,10 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -70,6 +57,7 @@ public class HVAC extends EzJPanel {
 
         updateTemp();
         updateHeatingCoolingLocked();
+        stopLooping();
     }
 
     @Override
@@ -77,19 +65,19 @@ public class HVAC extends EzJPanel {
         this.floors = new ArrayList<ArrayList<Room>>();
         this.displayClock = new Clock();
 
-        Room myRoom = new Room(60.0 / 280.0, 20.0 / 180.0, 80.0 / 280.0, 60.0 / 180.0, 70.0);
-        Room firstFloorBathRoom = new Room(140.0 / 280.0, 20.0 / 180.0, 40.0 / 280.0, 20.0 / 180.0, 70.0);
-        Room redRoom = new Room(20.0 / 280.0, 80.0 / 180.0, 40.0 / 280.0, 80.0 / 180.0, 70.0);
-        Room livingRoom = new Room(60.0 / 280.0, 80.0 / 180.0, 100.0 / 280.0, 80.0 / 180.0, 70.0);
-        Room diningRoom = new Room(180.0 / 280.0, 100.0 / 180.0, 80.0 / 280.0, 60.0 / 180.0, 70.0);
-        Room kitchen = new Room(180.0 / 280.0, 20.0 / 180.0, 80.0 / 280.0, 80.0 / 180.0, 70.0);
+        Room myRoom = new Room(60.0 / 280.0, 20.0 / 180.0, 80.0 / 280.0, 60.0 / 180.0, 70.1);
+        Room firstFloorBathRoom = new Room(140.0 / 280.0, 20.0 / 180.0, 40.0 / 280.0, 20.0 / 180.0, 70.1);
+        Room redRoom = new Room(20.0 / 280.0, 80.0 / 180.0, 40.0 / 280.0, 80.0 / 180.0, 70.1);
+        Room livingRoom = new Room(60.0 / 280.0, 80.0 / 180.0, 100.0 / 280.0, 80.0 / 180.0, 70.1);
+        Room diningRoom = new Room(180.0 / 280.0, 100.0 / 180.0, 80.0 / 280.0, 60.0 / 180.0, 70.1);
+        Room kitchen = new Room(180.0 / 280.0, 20.0 / 180.0, 80.0 / 280.0, 80.0 / 180.0, 70.1);
 
-        Room savRoom = new Room(60.0 / 280.0, 20.0 / 180.0, 80 / 280.0, 60.0 / 180.0, 70.0);
-        Room charlieRoom = new Room(60.0 / 280.0, 80.0 / 180.0, 80.0 / 280.0, 80.0 / 180.0, 70.0);
-        Room brettRoom = new Room(140.0 / 280.0, 120.0 / 180.0, 40.0 / 280.0, 40.0 / 180.0, 70.0);
-        Room secondFloorBathRoom = new Room(140.0 / 280.0, 20.0 / 180.0, 60.0 / 280.0, 40.0 / 180.0, 70.0);
-        Room haydenRoom = new Room(200.0 / 280.0, 20.0 / 180.0, 60.0 / 280.0, 60.0 / 180.0, 70.0);
-        Room emptyRoom = new Room(180.0 / 280.0, 80.0 / 180.0, 80.0 / 280.0, 80.0 / 180.0, 70.0);
+        Room savRoom = new Room(60.0 / 280.0, 20.0 / 180.0, 80 / 280.0, 60.0 / 180.0, 70.1);
+        Room charlieRoom = new Room(60.0 / 280.0, 80.0 / 180.0, 80.0 / 280.0, 80.0 / 180.0, 70.1);
+        Room brettRoom = new Room(140.0 / 280.0, 120.0 / 180.0, 40.0 / 280.0, 40.0 / 180.0, 70.1);
+        Room secondFloorBathRoom = new Room(140.0 / 280.0, 20.0 / 180.0, 60.0 / 280.0, 40.0 / 180.0, 70.1);
+        Room haydenRoom = new Room(200.0 / 280.0, 20.0 / 180.0, 60.0 / 280.0, 60.0 / 180.0, 70.1);
+        Room emptyRoom = new Room(180.0 / 280.0, 80.0 / 180.0, 80.0 / 280.0, 80.0 / 180.0, 70.1);
 
         // First floor stuff
         ArrayList<Room> firstFloor = new ArrayList<>();
@@ -118,6 +106,7 @@ public class HVAC extends EzJPanel {
                 });
             });
             this.displayClock.tick();
+            this.repaint();
         });
 
         this.clock.start();
@@ -210,6 +199,7 @@ public class HVAC extends EzJPanel {
         // System.out.println("Room Pressed: " + HVAC.room);
         updateHeatingCoolingLocked();
         updateTemp();
+        this.repaint();
     }
 
     // #region Componenets V2
@@ -232,6 +222,7 @@ public class HVAC extends EzJPanel {
             HVAC.floor = combo.getSelectedIndex();
             HVAC.room = 0;
             this.roomPicker.setSelectedIndex(0);
+            this.repaint();
         });
 
         // Create roomPicker
@@ -246,6 +237,7 @@ public class HVAC extends EzJPanel {
         this.roomPicker.addActionListener((ae) -> {
             JComboBox combo = (JComboBox) ae.getSource();
             HVAC.room = combo.getSelectedIndex();
+            this.repaint();
         });
 
         // Create start stop button
@@ -274,13 +266,16 @@ public class HVAC extends EzJPanel {
             this.coolingOffJRadioButton.setSelected(true);
             this.floors.get(HVAC.floor).get(HVAC.room).setHeating(this.heatingOnJRadioButton.isSelected());
             this.floors.get(HVAC.floor).get(HVAC.room).setCooling(false);
+            this.repaint();
         });
 
         this.heatingOffJRadioButton = new JRadioButton("Off");
         this.heatingOffJRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.heatingOffJRadioButton.setSelected(true);
         this.heatingOffJRadioButton.addActionListener((ae) -> {
             this.heatingOnJRadioButton.setSelected(!heatingOffJRadioButton.isSelected());
             this.floors.get(HVAC.floor).get(HVAC.room).setHeating(!this.heatingOffJRadioButton.isSelected());
+            this.repaint();
         });
 
         // create Cooling Radio button section
@@ -295,13 +290,16 @@ public class HVAC extends EzJPanel {
             this.heatingOnJRadioButton.setSelected(false);
             this.floors.get(HVAC.floor).get(HVAC.room).setCooling(this.coolingOnJRadioButton.isSelected());
             this.floors.get(HVAC.floor).get(HVAC.room).setHeating(false);
+            this.repaint();
         });
 
         this.coolingOffJRadioButton = new JRadioButton("Off");
+        this.coolingOffJRadioButton.setSelected(true);
         this.coolingOffJRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.coolingOffJRadioButton.addActionListener((ae) -> {
             this.coolingOnJRadioButton.setSelected(!coolingOffJRadioButton.isSelected());
             this.floors.get(HVAC.floor).get(HVAC.room).setCooling(!this.coolingOffJRadioButton.isSelected());
+            this.repaint();
         });
 
         rightJPanel.add(this.roomPicker);
@@ -335,11 +333,12 @@ public class HVAC extends EzJPanel {
 
         this.roomTempSlider.addChangeListener((ce) -> {
             JSlider slider = (JSlider) ce.getSource();
-            this.floors.get(HVAC.floor).get(HVAC.room).setTemp(slider.getValue() * 1.0);
+            this.floors.get(HVAC.floor).get(HVAC.room).setTemp(slider.getValue() * 1.0, "roomTempSlider");
+            repaint();
         });
 
         // Create outside temp area
-        this.outsideTempLabel = new JLabel("Outside Temperature (30-110°F)");
+        this.outsideTempLabel = new JLabel("Outside Temperature ("+(int) Room.getOutsideTemp()+"°F)");
         this.outsideTempLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.outsideTempSlider = new JSlider(30, 110, (int) Room.getOutsideTemp());
@@ -378,18 +377,26 @@ public class HVAC extends EzJPanel {
             this.coolingOnJRadioButton.setSelected(false);
             this.coolingOffJRadioButton.setSelected(true);
         } else {
-            this.heatingOnJRadioButton.setSelected(this.floors.get(HVAC.floor).get(HVAC.room).isHeating());
-            this.heatingOffJRadioButton.setSelected(!this.floors.get(HVAC.floor).get(HVAC.room).isHeating());
-            this.coolingOnJRadioButton.setSelected(this.floors.get(HVAC.floor).get(HVAC.room).isCooling());
-            this.coolingOffJRadioButton.setSelected(!this.floors.get(HVAC.floor).get(HVAC.room).isCooling());
+            boolean roomIsHeating = this.floors.get(HVAC.floor).get(HVAC.room).isHeating();
+            boolean roomIsCooling = this.floors.get(HVAC.floor).get(HVAC.room).isCooling();
+
+            if (roomIsHeating != this.heatingOnJRadioButton.isSelected()){
+                this.heatingOnJRadioButton.setSelected(roomIsHeating);
+                this.heatingOffJRadioButton.setSelected(!roomIsHeating);
+            }
+            if (roomIsCooling != this.coolingOnJRadioButton.isSelected()){
+                this.coolingOnJRadioButton.setSelected(roomIsCooling);
+                this.coolingOffJRadioButton.setSelected(!roomIsCooling);
+            }
         }
     }
 
     private void updateTemp() {
-        this.roomTempSlider.setValue((int) this.floors.get(HVAC.floor).get(HVAC.room).getTemp());
-
+        if (this.roomTempSlider.getValue() != ((int) this.floors.get(HVAC.floor).get(HVAC.room).getTemp())){
+            this.roomTempSlider.setValue((int) this.floors.get(HVAC.floor).get(HVAC.room).getTemp() );
+        }
         this.roomTempLabel.setText("Room Temperature (" + this.roomTempSlider.getValue() + "°F)");
-
+        // repaint();
     }
 
     @Override
@@ -400,6 +407,7 @@ public class HVAC extends EzJPanel {
             g.drawString("" + (i + 1), r.getX() + 3, r.getY() + 15);
         }
         this.displayClock.draw(g);
+
         // this.floors.get(HVAC.floor).forEach((r)->{
         // r.drawP(g, getWidth(), getHeight());
         // g.drawString(""+this.floors.indexOf(r)+1, r.getX(), r.getY());

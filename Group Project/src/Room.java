@@ -1,4 +1,3 @@
-
 /*
  * File: Room.java
  * Authors: Adam Fuller, Isaiah Chamoun, Lawrence Oldham
@@ -63,13 +62,13 @@ public class Room {
             }
         }
         if (this.isCooling) {
-            this.temp = ((this.temp + Room.coolingTemp * Room.tempRate + Room.outsideTemp * Room.tempRate)
-                    / ((1 + 2 * Room.tempRate)));
+            this.setTemp((this.temp + Room.coolingTemp * Room.tempRate + Room.outsideTemp * Room.tempRate)
+                    / ((1 + 2 * Room.tempRate)), "tick");
         } else if (this.isHeating) {
-            this.temp = ((this.temp + Room.heatingTemp * Room.tempRate + Room.outsideTemp * Room.tempRate)
-                    / (1 + 2 * Room.tempRate));
+            this.setTemp((this.temp + Room.heatingTemp * Room.tempRate + Room.outsideTemp * Room.tempRate)
+                    / (1 + 2 * Room.tempRate), "tick");
         } else {
-            this.temp = ((this.temp + Room.outsideTemp * Room.tempRate) / (1 + Room.tempRate));
+            this.setTemp((this.temp + Room.outsideTemp * Room.tempRate) / (1 + Room.tempRate), "tick");
         }
     }
 
@@ -79,6 +78,20 @@ public class Room {
      * @param temp
      */
     public void setTemp(double temp) {
+        if (temp > Room.maxTemp) {
+            temp = Room.maxTemp;
+        } else if (temp < Room.minTemp) {
+            temp = Room.minTemp;
+        }
+        this.temp = temp;
+    }
+    
+    /**
+     * Update the rooms temp
+     * 
+     * @param temp
+     */
+    public void setTemp(double temp, String location) {
         if (temp > Room.maxTemp) {
             temp = Room.maxTemp;
         } else if (temp < Room.minTemp) {

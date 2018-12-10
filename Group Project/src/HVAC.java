@@ -129,32 +129,36 @@ public class HVAC extends EzJPanel {
                 System.out.println("Help clicked");
 
                 JDialog dialog = new JDialog();
-                dialog.setSize(200, 200);
+                dialog.setTitle("Help");
+                dialog.setSize(500, 100);
                 dialog.setLocation(500, 500);
-                dialog.setLayout(new GridLayout(1, 1));
-                JLabel helpLabel = new JLabel("It's just a heater stupid");
+                dialog.setLayout(new BorderLayout());
+                JLabel helpLabel = new JLabel("<html>Try using the sliders to adjust the temperature of a room or outside" 
+                + "<br>or use one of the radio buttons to activate a room's heating or cooling"
+                +"<html>");
                 helpLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-                dialog.add(helpLabel);
+                dialog.add(helpLabel, BorderLayout.CENTER);
                 dialog.setVisible(true);
-                dialog.setResizable(false);
+                // dialog.setResizable(false);
 
-                new Timer(30, (NULL) -> {
-                    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                // Move around the help menu
+                // new Timer(30, (NULL) -> {
+                //     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-                    xPos += xVel;
-                    yPos += yVel;
-                    if (xPos >= screenSize.getWidth() - 200) {
-                        xVel *= -1;
-                    } else if (xPos <= 0) {
-                        xVel *= -1;
-                    }
-                    if (yPos >= screenSize.getHeight() - 200) {
-                        yVel *= -1;
-                    } else if (yPos <= 0) {
-                        yVel *= -1;
-                    }
-                    dialog.setLocation(xPos, yPos);
-                }).start();
+                //     xPos += xVel;
+                //     yPos += yVel;
+                //     if (xPos >= screenSize.getWidth() - 200) {
+                //         xVel *= -1;
+                //     } else if (xPos <= 0) {
+                //         xVel *= -1;
+                //     }
+                //     if (yPos >= screenSize.getHeight() - 200) {
+                //         yVel *= -1;
+                //     } else if (yPos <= 0) {
+                //         yVel *= -1;
+                //     }
+                //     dialog.setLocation(xPos, yPos);
+                // }).start();
             }
 
             @Override

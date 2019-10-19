@@ -1,6 +1,6 @@
 # Ideas
-- [ ] Maybe add heater stop temp option (Paid Version / V2)
-- [ ] color scale on slider (Paid Version / V2)
+- [ ] Maybe add heater stop temp option (V2)
+- [ ] color scale on slider (V2)
 - [x] on off radio buttons for heater
 - [x] timer
 - [x] add teamname
